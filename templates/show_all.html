@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+          <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+   </head>
+   <body>
+
+      <h3>
+         <a href = "{{ url_for('show_all') }}">Modemübersicht</a>
+      </h3>
+
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+            <h3>Modems (<a href = "{{ url_for('new') }}">hinzufügen
+         </a>)</h3>
+
+      <table class="table">
+         <thead>
+            <tr>
+               <th>Modelname</th>
+                <th>MAC</th>
+               <th>Wert</th>
+               <th>Coord1</th>
+                <th>Coord2</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for modem in modems %}
+               <tr>
+                  <td>{{ modem.modelname }}</td>
+                   <td>{{ modem.mac }}</td>
+                  <td>{{ modem.wert }}</td>
+                  <td>{{ modem.coord1 }}</td>
+                  <td>{{ modem.coord2 }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+
+   </body>
+</html>

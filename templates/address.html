@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+           <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+   </head>
+   <body>
+      <h3>
+         <a href = "{{ url_for('show_address') }}">Adressübersicht</a>
+      </h3>
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+            <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen
+         </a>)</h3>
+      <table class="table">
+         <thead>
+            <tr>
+               <th>Bezeichnung</th>
+               <th>Straße</th>
+               <th>Hausnummer</th>
+                <th>PLZ</th>
+                <th>Stadt</th>
+                <th>MAC</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for ad in address %}
+               <tr>
+                  <td>{{ ad.name }}</td>
+                  <td>{{ ad.street }}</td>
+                  <td>{{ ad.number }}</td>
+                  <td>{{ ad.plz }}</td>
+                   <td>{{ ad.city }}</td>
+                   <td>{{ ad.mac }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </body>
+</html>

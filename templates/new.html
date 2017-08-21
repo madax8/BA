@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+       <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+   <body>
+
+      <h3>Modems - Anlegen</h3>
+      <hr/>
+
+      {%- for category, message in get_flashed_messages(with_categories = true) %}
+         <div class = "alert alert-danger">
+            {{ message }}
+         </div>
+      {%- endfor %}
+
+      <form action = "{{ request.path }}" method = "post">
+         <label for = "modelname">Modelname</label><br>
+         <input type = "text" name = "modelname" placeholder = "Modelname" /><br>
+         <label for = "mac">MAC</label><br>
+         <input type = "text" name = "mac" placeholder = "mac" /><br>
+         <label for = "wert">Wert</label><br>
+         <input type = "text" name = "wert" placeholder = "wert" /><br>
+         <label for = "coord1">coord1</label><br>
+         <input type = "text" name = "coord1" placeholder = "coord1" /><br>
+          <label for = "coord2">coord2</label><br>
+         <input type = "text" name = "coord2" placeholder = "coord2" /><br>
+         <input type = "submit" value = "Submit" />
+      </form>
+
+   </body>
+</html>

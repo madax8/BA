@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <meta charset="UTF-8">
+    <title>Geojson</title>
+</head>
+<body>
+<div class="col-md-10">
+<h3 class="">Geojson</h3>
+
+
+<button class="btn btn-primary" id="create">Erstellen</button>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>anzeigen</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for gj in geoj %}
+        <tr>
+            <td>{{ gj.name }}</td>
+            <td><a href="">anzeigen</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+</body>
+</html>
