@@ -1,6 +1,3 @@
-//persönlicher Token aus dem Mapbox-Konto
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMnB5eXpvMTAwNDMzM2xrdDF0eW02bTkifQ.VxANLxzX8ALvUIDG7y6FLQ';
-
 // This will let you use the .remove() function later on
 if (!('remove' in Element.prototype)) {
   Element.prototype.remove = function() {
@@ -10,31 +7,19 @@ if (!('remove' in Element.prototype)) {
   };
 }
 
-//Maximalgröße der Karte
-var bounds = [
-    [11.764160, 47.689197], //südwest
-    [12.405487, 47.991530]  //nordost
-    ];
-
-// Karte initialisieren
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMXJtbXdzcDAwMGQyeHA5dHJ2dzk0cXYifQ.-u9docIARufpe60AmWEFTA';
+// This adds the map to your page
 var map = new mapboxgl.Map({
-    container: 'map',
-    //streets, dark, light, satellite-streets
-    style: 'mapbox://styles/mapbox/streets-v10',
-    center: [12.131016, 47.854954],
-    zoom: 15,
-//    maxBounds: bounds // Sets bounds as max
+  // container id specified in the HTML
+  container: 'map',
+  // style URL
+  style: 'mapbox://styles/mapbox/light-v9',
+  // initial position in [lon, lat] format
+  center: [12.131016, 47.854954],
+  // initial zoom
+  zoom: 14
 });
 
-
-// Add zoom and rotation controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
-
-// fullscreen
-map.addControl(new mapboxgl.FullscreenControl());
-
-//jedes feature enthält die Koordinaten des Punktes im geometry Teil
-//im Property Teil kann man selbst die Daten eines Modems hinzufügen
 var mod = {
   "type": "FeatureCollection",
   "features": [
@@ -253,113 +238,35 @@ var mod = {
 
 
 // müsste man eigentlich beim Seitenaufruf mitgegeben bekommen
-//staticUrl = './static/test_1.geojson';
-jN = window.location.pathname;
-jN = jN.substring(4);
-staticUrl = '/return_geojson' + jN;
+staticUrl = './static/test_1.geojson'
 $.getJSON(staticUrl, function(data){
     mod = data;
 })
 
-// layer wechseln ist etwas redundant
-// allerdings bietet mapbox keine wirklichen alternativen
-var layerList = document.getElementById('switch');
-var inputs = layerList.getElementsByTagName('input');
-function switchLayer(layer) {
-    var layerId = layer.target.id;
-    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v10');
-     map.on('style.load', function() {
-         map.addSource('single-point', {
-        "type": "geojson",
-        "data": mod
-    });
-         map.addLayer({
-        "id": "modems",
-        "type": "circle",
-        "source": "single-point",
-        "paint": {
-        'circle-radius': {
-                'base': 1.75,
-                'stops': [[12, 2], [22, 180]]
-            },
-            "circle-color": {
-                "property": "class",
-                "type": "categorical",
-                "stops": [
-                    ["building", "#223b53"],      //blau (Wohn)Gebäude
-                    ["amenity", "#fbb03b"],   //gelb Dienstleitungen
-                    ["office", "#B42222"],    //rot Büros
-                    ["shop","#349b4b"]         //grün einkaufen
-                    ]
-            },
-            "circle-stroke-width": 3,        //stärke der umrandung
-            "circle-stroke-color": {
-                "property": "type",
-                "type": "categorical",
-                "stops": [
-                    ["yes", "#349b4b"],         //standardtyp bzw. kein spezieller typ
-                    ["restaurant", "#B42222"]
-                ]
-            }
-        },
-    });
-    });
-}
-for (var i = 0; i < inputs.length; i++) {
-    inputs[i].onclick = switchLayer;
-}
 
 
+map.on('load', function(e) {
+  // Add the data to your map as a layer
+  map.addLayer({
+    id: 'locations',
+    type: 'symbol',
+    // Add a GeoJSON source containing place coordinates and information.
+    source: {
+      type: 'geojson',
+      data: mod
+    },
+    layout: {
+      'icon-image': 'restaurant-15',
+      'icon-allow-overlap': true,
+    }
+  });
 
-// Implementierung mit Geojson
-map.on('load', function(){
-
-//    window.setInterval(function() {
-//        map.getSource(mod).setData(staticUrl);
-//    }, 2000);
-
-    map.addSource('point', {
-        "type": "geojson",
-        "data": mod
-    });
-
-    map.addLayer({
-        "id": "modems",
-        "type": "circle",
-        "source": "point",
-        "paint": {
-        'circle-radius': {
-                'base': 1.75,
-                'stops': [[12, 2], [22, 180]]
-            },
-            "circle-color": {
-                "property": "class",
-                "type": "categorical",
-                "stops": [
-                    ["building", "#223b53"],      //blau (Wohn)Gebäude
-                    ["amenity", "#fbb03b"],   //gelb Dienstleitungen
-                    ["office", "#B42222"],    //rot Büros
-                    ["shop","#349b4b"]         //grün einkaufen
-                    ]
-            },
-            "circle-stroke-width": 3,        //stärke der umrandung
-            "circle-stroke-color": {
-                "property": "type",
-                "type": "categorical",
-                "stops": [
-                    ["yes", "#349b4b"],         //standardtyp bzw. kein spezieller typ
-                    ["restaurant", "#B42222"]
-                ]
-            }
-        },
-    });
-
-      buildLocationList(mod);
+  buildLocationList(mod);
 
       // Add an event listener for when a user clicks on the map
     map.on('click', function(e) {
       // Query all the rendered points in the view
-      var features = map.queryRenderedFeatures(e.point, { layers: ['modems'] });
+      var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
       if (features.length) {
         var clickedPoint = features[0];
         // 1. Fly to the point
@@ -384,48 +291,7 @@ map.on('load', function(){
         listing.classList.add('active');
       }
     });
-
-    // iteriert über das geojson und erweitert mit den entnomenen Daten die Modemliste
-//    for(var i=0; i < Object.keys(mod.features).length; i++)
-//    mod.features.forEach(function(feature){
-//        var statusStr = "Status: " + String(feature.properties.class);
-////        var statusStr = "Status: " + String(mod.features[i].properties.data);
-//        modems = [feature.properties.display_name, statusStr, feature.geometry.coordinates];
-//        map.flyTo({
-//            center: feature.geometry.coordinates
-//        })
-////        modems = [mod.features[i].properties.name, statusStr, coords];
-//        document.getElementById('feature-listing').appendChild(makeUL(modems));
-//
-//
-//    })
-
-
-    // creating a list for the points
-    // Hier evtl. einen anderen Ansatz wählen; Es müsste eine direkte Zuordung zwischen Liste und Geopunkten erfolgen
-//    function makeUL(array) {
-//    // Create the list element:
-//    var list = document.createElement('ul');
-//    list.setAttribute('class', 'list-group');
-//    // Loop over the list:
-//    for(var i = 0; i < array.length; i++) {
-//            // Create the list item:
-//            var item = document.createElement('li');
-//            item.setAttribute('class', 'list-group-item');
-//            // Set its contents:
-//            item.appendChild(document.createTextNode(array[i]));
-//
-//            // Add it to the list:
-//            list.appendChild(item);
-//    }
-//
-//
-//    // Finally, return the constructed list:
-//    return list;
-//    }
-//        renderListings(mod);
-})
-
+});
 
 function buildLocationList(data) {
   // Iterate through the list of stores
@@ -475,7 +341,6 @@ function buildLocationList(data) {
   }
 }
 
-
 function flyToStore(currentFeature) {
   map.flyTo({
     center: currentFeature.geometry.coordinates,
@@ -494,7 +359,5 @@ function createPopUp(currentFeature) {
       '<h4>' + currentFeature.properties.display_name + '</h4>')
     .addTo(map);
 }
-
-
 
 
