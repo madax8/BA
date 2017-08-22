@@ -117,11 +117,6 @@ def show_map():
     return render_template('map_default.html')
 
 
-@app.route('/tutorial')
-def tutorial():
-    return render_template('store_tutorial.html')
-
-
 @app.route('/map/<name>')
 def show_map_dynamic(name):
     return render_template('map_dynamic.html', jsonName=name)
