@@ -10,7 +10,7 @@ if (!('remove' in Element.prototype)) {
   };
 }
 
-//Maximalgröße der Karte
+// Maximalgröße der Karte
 var bounds = [
     [11.764160, 47.689197], //südwest
     [12.405487, 47.991530]  //nordost
@@ -374,8 +374,8 @@ map.on('load', function(){
         // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
         var selectedFeature = clickedPoint.properties.address;
 
-        for (var i = 0; i < stores.features.length; i++) {
-          if (stores.features[i].properties.address === selectedFeature) {
+        for (var i = 0; i < mod.features.length; i++) {
+          if (mod.features[i].properties.address === selectedFeature) {
             selectedFeatureIndex = i;
           }
         }
@@ -383,6 +383,16 @@ map.on('load', function(){
         var listing = document.getElementById('listing-' + selectedFeatureIndex);
         listing.classList.add('active');
       }
+
+    map.on('mouseenter', 'modems', function(e){
+        // get a nice looking cursor
+        map.getCanvas().style.cursor = 'pointer';
+      })
+
+    map.on('mouseleave', 'modems', function(){
+        map.getCanvas().style.cursor = '';
+    })
+
     });
 
     // iteriert über das geojson und erweitert mit den entnomenen Daten die Modemliste
@@ -426,7 +436,7 @@ map.on('load', function(){
 //        renderListings(mod);
 })
 
-
+// erstellen der Modemliste
 function buildLocationList(data) {
   // Iterate through the list of stores
   for (i = 0; i < data.features.length; i++) {
@@ -449,7 +459,6 @@ function buildLocationList(data) {
     link.dataPosition = i;
     link.innerHTML = prop.display_name;
 
-
     // Add an event listener for the links in the sidebar listing
     link.addEventListener('click', function(e) {
       // Update the currentFeature to the store associated with the clicked link
@@ -469,26 +478,26 @@ function buildLocationList(data) {
     // and fill it with the city and phone number
     var details = listing.appendChild(document.createElement('div'));
     details.innerHTML = prop.class;
-//    if (prop.phone) {
-//      details.innerHTML += ' &middot; ' + prop.phoneFormatted;
-//    }
+    details.innerHTML += ' @location: ' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];
   }
 }
 
-
+// Karte auf Feature zentrieren
 function flyToStore(currentFeature) {
   map.flyTo({
     center: currentFeature.geometry.coordinates,
-    zoom: 15
+    offset: [200,0],
+    zoom: 16
   });
 }
 
+// Popup erstellen
 function createPopUp(currentFeature) {
   var popUps = document.getElementsByClassName('mapboxgl-popup');
   // Check if there is already a popup on the map and if so, remove it
-  if (popUps[0]) popUps[0].remove();
+//  if (popUps[0]) popUps[0].remove();
 
-  var popup = new mapboxgl.Popup({ closeOnClick: false })
+  var popup = new mapboxgl.Popup({ closeOnClick: true })
     .setLngLat(currentFeature.geometry.coordinates)
     .setHTML('<h3>' + currentFeature.properties.class + '</h3>' +
       '<h4>' + currentFeature.properties.display_name + '</h4>')

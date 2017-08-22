@@ -439,7 +439,6 @@ map.on('mouseenter', 'modems', function(e){
     popup.setLngLat(e.features[0].geometry.coordinates).setHTML(e.features[0].properties.display_name).addTo(map);
 })
 
-
 // hide popup
 map.on('mouseleave', 'modems', function(){
     map.getCanvas().style.cursor = '';
