@@ -125,9 +125,6 @@ a:hover {
   width: 180px;
 }
 
-.mapboxgl-popup-red {
-  background: #fff;
-}
 
 .mapboxgl-popup-close-button {
     display: none;
@@ -168,7 +165,7 @@ a:hover {
 }
 
 .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
-  border-bottom-color: #0004ff;
+  border-bottom-color: #fff;
 }
 
 #switch {

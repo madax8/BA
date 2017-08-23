@@ -319,8 +319,11 @@ for (var i = 0; i < inputs.length; i++) {
 map.on('load', function(){
 
 //    window.setInterval(function() {
-//        map.getSource(mod).setData(staticUrl);
-//    }, 2000);
+//        $.getJSON(staticUrl, function(data){
+//            mod = data;
+//        })
+//        map.getSource(mod);
+//    }, 5000);
 
     map.addSource('point', {
         "type": "geojson",
@@ -358,7 +361,7 @@ map.on('load', function(){
         },
     });
 
-      buildLocationList(mod);
+    buildLocationList(mod);
 
       // Add an event listener for when a user clicks on the map
     map.on('click', function(e) {
