@@ -22,9 +22,13 @@ var map = new mapboxgl.Map({
     //streets, dark, light, satellite-streets
     style: 'mapbox://styles/mapbox/streets-v10',
     center: [12.131016, 47.854954],
-    zoom: 15,
+    zoom: 13,
+    attributionControl: false,
+    logoView: false,
 //    maxBounds: bounds // Sets bounds as max
-});
+}).addControl(new mapboxgl.AttributionControl({
+        compact: true
+    }));
 
 
 // Add zoom and rotation controls to the map.
@@ -363,7 +367,7 @@ map.on('load', function(){
       if (features.length) {
         var clickedPoint = features[0];
         // 1. Fly to the point
-        flyToStore(clickedPoint);
+        flyToAddress(clickedPoint);
         // 2. Close all other popups and display popup for clicked store
         createPopUp(clickedPoint);
         // 3. Highlight listing in sidebar (and remove highlight for all other listings)
@@ -371,17 +375,25 @@ map.on('load', function(){
         if (activeItem[0]) {
           activeItem[0].classList.remove('active');
         }
-        // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
-        var selectedFeature = clickedPoint.properties.address;
+        // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
+        var selectedFeature = clickedPoint.properties.display_name;
+
 
         for (var i = 0; i < mod.features.length; i++) {
-          if (mod.features[i].properties.address === selectedFeature) {
+          if (mod.features[i].properties.display_name === selectedFeature) {
             selectedFeatureIndex = i;
           }
         }
         // Select the correct list item using the found index and add the active class
         var listing = document.getElementById('listing-' + selectedFeatureIndex);
         listing.classList.add('active');
+
+        //Try Scrolling the Div to the active position
+//        divId = '#listing-' + selectedFeatureIndex;
+//        $('html, body').animate({
+//                    scrollTop: $('active').offset().top
+//                }, 2000);
+//        window.scrollTo(0, $(listing).offset().top);
       }
 
     map.on('mouseenter', 'modems', function(e){
@@ -395,45 +407,7 @@ map.on('load', function(){
 
     });
 
-    // iteriert über das geojson und erweitert mit den entnomenen Daten die Modemliste
-//    for(var i=0; i < Object.keys(mod.features).length; i++)
-//    mod.features.forEach(function(feature){
-//        var statusStr = "Status: " + String(feature.properties.class);
-////        var statusStr = "Status: " + String(mod.features[i].properties.data);
-//        modems = [feature.properties.display_name, statusStr, feature.geometry.coordinates];
-//        map.flyTo({
-//            center: feature.geometry.coordinates
-//        })
-////        modems = [mod.features[i].properties.name, statusStr, coords];
-//        document.getElementById('feature-listing').appendChild(makeUL(modems));
-//
-//
-//    })
 
-
-    // creating a list for the points
-    // Hier evtl. einen anderen Ansatz wählen; Es müsste eine direkte Zuordung zwischen Liste und Geopunkten erfolgen
-//    function makeUL(array) {
-//    // Create the list element:
-//    var list = document.createElement('ul');
-//    list.setAttribute('class', 'list-group');
-//    // Loop over the list:
-//    for(var i = 0; i < array.length; i++) {
-//            // Create the list item:
-//            var item = document.createElement('li');
-//            item.setAttribute('class', 'list-group-item');
-//            // Set its contents:
-//            item.appendChild(document.createTextNode(array[i]));
-//
-//            // Add it to the list:
-//            list.appendChild(item);
-//    }
-//
-//
-//    // Finally, return the constructed list:
-//    return list;
-//    }
-//        renderListings(mod);
 })
 
 // erstellen der Modemliste
@@ -457,14 +431,14 @@ function buildLocationList(data) {
     link.href = '#';
     link.className = 'title';
     link.dataPosition = i;
-    link.innerHTML = prop.display_name;
+    link.innerHTML = prop.class;
 
     // Add an event listener for the links in the sidebar listing
     link.addEventListener('click', function(e) {
       // Update the currentFeature to the store associated with the clicked link
       var clickedListing = data.features[this.dataPosition];
       // 1. Fly to the point associated with the clicked link
-      flyToStore(clickedListing);
+      flyToAddress(clickedListing);
       // 2. Close all other popups and display popup for clicked store
       createPopUp(clickedListing);
       // 3. Highlight listing in sidebar (and remove highlight for all other listings)
@@ -477,17 +451,19 @@ function buildLocationList(data) {
     // Create a new div with the class 'details' for each store
     // and fill it with the city and phone number
     var details = listing.appendChild(document.createElement('div'));
-    details.innerHTML = prop.class;
-    details.innerHTML += ' @location: ' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];
+    details.innerHTML = prop.display_name;
+    details.innerHTML += '<br>' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];
   }
+  flyToAddress(data.features[0]);
 }
 
 // Karte auf Feature zentrieren
-function flyToStore(currentFeature) {
+function flyToAddress(currentFeature) {
   map.flyTo({
     center: currentFeature.geometry.coordinates,
     offset: [200,0],
-    zoom: 16
+    zoom: 16,
+    speed: 0.6
   });
 }
 
@@ -495,13 +471,29 @@ function flyToStore(currentFeature) {
 function createPopUp(currentFeature) {
   var popUps = document.getElementsByClassName('mapboxgl-popup');
   // Check if there is already a popup on the map and if so, remove it
-//  if (popUps[0]) popUps[0].remove();
+//    if(popUps[0]) popUps[0].remove();
 
-  var popup = new mapboxgl.Popup({ closeOnClick: true })
-    .setLngLat(currentFeature.geometry.coordinates)
-    .setHTML('<h3>' + currentFeature.properties.class + '</h3>' +
-      '<h4>' + currentFeature.properties.display_name + '</h4>')
-    .addTo(map);
+    // fühlt sich momentan nach einem schlechten Workaround an
+    // Fargebung unterscheidet sich je nach inhalt des Properties
+    if(currentFeature.properties.type == 'yes'){
+          var popup = new mapboxgl.Popup()
+            .setLngLat(currentFeature.geometry.coordinates)
+            .setHTML('<h3 style="background:#349b4b;">' + currentFeature.properties.class + '</h3>' +
+                '<h4>' + currentFeature.properties.type + '</h4>')
+            .addTo(map);
+    }else if(currentFeature.properties.type == 'restaurant'){
+          var popup = new mapboxgl.Popup()
+            .setLngLat(currentFeature.geometry.coordinates)
+            .setHTML('<h3 style="background:#B42222;">' + currentFeature.properties.class + '</h3>' +
+                '<h4>' + currentFeature.properties.type + '</h4>')
+            .addTo(map);
+    }else{
+          var popup = new mapboxgl.Popup()
+            .setLngLat(currentFeature.geometry.coordinates)
+            .setHTML('<h3 style="background:black;">' + currentFeature.properties.class + '</h3>' +
+                '<h4>' + currentFeature.properties.type + '</h4>')
+            .addTo(map);
+    }
 }
 
 
