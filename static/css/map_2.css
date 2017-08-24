@@ -90,7 +90,7 @@ a:hover {
 .listings .item .title:hover { color: #6d6fff; }
 
 .listings .item.active {
-  background-color: #efefef;
+  background-color: #e0f3ff;
 }
 
 ::-webkit-scrollbar {
