@@ -391,12 +391,9 @@ map.on('load', function(){
         var listing = document.getElementById('listing-' + selectedFeatureIndex);
         listing.classList.add('active');
 
-        //Try Scrolling the Div to the active position
-//        divId = '#listing-' + selectedFeatureIndex;
-//        $('html, body').animate({
-//                    scrollTop: $('active').offset().top
-//                }, 2000);
-//        window.scrollTo(0, $(listing).offset().top);
+        // Scroll to the Position on the List
+        var topPos = listing.offsetTop - 200;
+        document.getElementById('listings').scrollTop = topPos;
       }
 
     map.on('mouseenter', 'modems', function(e){
@@ -499,6 +496,12 @@ function createPopUp(currentFeature) {
     }
 }
 
+function updateListSelection(liID) {
 
+    var list = document.getElementById("#listings"),
+        targetLi = document.getElementById(liID); // id tag of the <li> element
+
+    list.scrollTop = (targetLi.offsetTop - 50);
+};
 
 
