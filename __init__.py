@@ -304,15 +304,15 @@ def convert_json(ar):
 # code thanks to time.sleep() very slow, but it has to be because of nominatims usage policy
 # catches the timeoutexception and trys again
 # maybe not so much of a problem if a own server is used for nominatim
-def do_geocode(address):
+def do_geocode(addr):
     try:
-        return geolocator.geocode(address)
+        return geolocator.geocode(addr)
     except GeocoderTimedOut:
         time.sleep(1)
-        return do_geocode(address)
+        return do_geocode(addr)
 
 
-# rückgabe des gjons an das Frontend
+# rückgabe des geojons an das Frontend
 @app.route('/return_geojson/<name>')
 def return_geojson(name):
     g = geoj.query.filter_by(name=name).first()

@@ -318,12 +318,12 @@ for (var i = 0; i < inputs.length; i++) {
 // Implementierung mit Geojson
 map.on('load', function(){
 
-//    window.setInterval(function() {
-//        $.getJSON(staticUrl, function(data){
-//            mod = data;
-//        })
-//        map.getSource(mod);
-//    }, 5000);
+    window.setInterval(function() {
+        $.getJSON(staticUrl, function(data){
+            mod = data;
+        })
+        map.getSource(mod);
+    }, 10000);
 
     map.addSource('point', {
         "type": "geojson",
@@ -392,7 +392,7 @@ map.on('load', function(){
         listing.classList.add('active');
 
         // Scroll to the Position on the List
-        var topPos = listing.offsetTop - 200;
+        var topPos = listing.offsetTop - 220;
         document.getElementById('listings').scrollTop = topPos;
       }
 
@@ -496,12 +496,5 @@ function createPopUp(currentFeature) {
     }
 }
 
-function updateListSelection(liID) {
-
-    var list = document.getElementById("#listings"),
-        targetLi = document.getElementById(liID); // id tag of the <li> element
-
-    list.scrollTop = (targetLi.offsetTop - 50);
-};
 
 
