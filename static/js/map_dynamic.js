@@ -343,10 +343,10 @@ map.on('load', function(){
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "#223b53"],      //blau (Wohn)Gebäude
-                    ["amenity", "#fbb03b"],   //gelb Dienstleitungen
-                    ["office", "#B42222"],    //rot Büros
-                    ["shop","#349b4b"]         //grün einkaufen
+                    ["building", "#223b53"],
+                    ["amenity", "#fbb03b"],
+                    ["office", "#B42222"],
+                    ["shop","#349b4b"]
                     ]
             },
             "circle-stroke-width": 3,        //stärke der umrandung
