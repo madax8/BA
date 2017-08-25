@@ -476,7 +476,7 @@ function createPopUp(currentFeature) {
     // fühlt sich momentan nach einem schlechten Workaround an
     // Fargebung unterscheidet sich je nach inhalt des Properties
     if(currentFeature.properties.type == 'yes'){
-          var popup = new mapboxgl.Popup()
+          var popup = new mapboxgl.Popup({})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:#349b4b;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
