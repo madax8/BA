@@ -342,10 +342,10 @@ map.on('load', function(){
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "#223b53"],
-                    ["amenity", "#fbb03b"],
-                    ["office", "#B42222"],
-                    ["shop","#349b4b"]
+                    ["building", "darkblue"],
+                    ["amenity", "orange"],
+                    ["office", "red"],
+                    ["shop","green"]
                     ]
             },
             "circle-stroke-width": 3,        //stärke der umrandung
@@ -353,8 +353,8 @@ map.on('load', function(){
                 "property": "type",
                 "type": "categorical",
                 "stops": [
-                    ["yes", "#349b4b"],         //standardtyp bzw. kein spezieller typ
-                    ["restaurant", "#B42222"]
+                    ["yes", "green"],         //standardtyp bzw. kein spezieller typ
+                    ["restaurant", "red"]
                 ]
             }
         },
@@ -477,13 +477,13 @@ function createPopUp(currentFeature) {
     if(currentFeature.properties.type == 'yes'){
           var popup = new mapboxgl.Popup({})
             .setLngLat(currentFeature.geometry.coordinates)
-            .setHTML('<h3 style="background:#349b4b;">' + currentFeature.properties.class + '</h3>' +
+            .setHTML('<h3 style="background:green;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
             .addTo(map);
     }else if(currentFeature.properties.type == 'restaurant'){
           var popup = new mapboxgl.Popup()
             .setLngLat(currentFeature.geometry.coordinates)
-            .setHTML('<h3 style="background:#B42222;">' + currentFeature.properties.class + '</h3>' +
+            .setHTML('<h3 style="background:red;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
             .addTo(map);
     }else{
