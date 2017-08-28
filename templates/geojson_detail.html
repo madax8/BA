@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <!--jquery-->
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Detail</title>
 </head>
 <body>
-
+    <h3>Geojson anzeigen</h3>
+    <h3>{{ geoj.name }}</h3>
+    <br>
+    <br>
+    <div class="col-md-10" id="json">
+    </div>
+    <script src="{{ url_for('static', filename='js/geojson_detail.js') }}"></script>
 </body>
 </html>

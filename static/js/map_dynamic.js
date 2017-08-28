@@ -314,7 +314,6 @@ for (var i = 0; i < inputs.length; i++) {
 }
 
 
-
 // Implementierung mit Geojson
 map.on('load', function(){
 

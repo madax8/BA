@@ -319,5 +319,9 @@ def return_geojson(name):
     return g.jsondata
 
 
+@app.route('/geojson_detail/<name>')
+def geojson_detail(name):
+    g=geoj.query.filter_by(name=name).first()
+    return render_template('geojson_detail.html', geoj=g)
 
 
