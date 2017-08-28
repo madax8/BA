@@ -177,6 +177,7 @@ def new_address():
     return render_template('new_address.html')
 
 
+# save a json into the database
 def save_json(name, geojson):
     # g = geoj.query.filter_by(name=name)
     save = geoj(name, geojson)
@@ -194,6 +195,7 @@ def save_json(name, geojson):
     flash('Json was successfully saved')
 
 
+# render the geojson-view
 @app.route('/geojson')
 def show_geojson():
     return render_template('geojson.html', geoj=geoj.query.all())
