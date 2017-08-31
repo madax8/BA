@@ -406,7 +406,6 @@ map.on('load', function(){
 
     });
 
-
 })
 
 // erstellen der Modemliste

@@ -35,21 +35,23 @@
     <div id="map" class="map">
     </div>
     <div id="switch">
-        <label for='streets'>Karte</label>
         <input id='streets' type='radio' name='rtoggle' value='streets' checked='checked'>
-        <label for='satellite-streets'>Satellit</label>
+        <label for='streets'>Karte</label>
         <input id='satellite-streets' type='radio' name='rtoggle' value='satellite-streets'>
+        <label for='satellite-streets'>Satellit</label>
     </div>
 
     <div class='sidebar'>
-        <h2>Kartenansicht für: {{ jsonName }}</h2>
-        <a class="zurück" href="/">zurück zur Übersicht</a>
-        <br>
-        <br>
-        <div class='heading'>
-            <h3>Modemliste</h3>
+        <div class="topbar">
+                        <h2>Kartenansicht für: {{ jsonName }}</h2>
+            <a class="zurück" href="/">zurück zur Übersicht</a>
         </div>
-  <div id='listings' class='listings'></div>
+
+         <div class='heading'>
+                <h3>Modemliste</h3>
+            </div>
+            <div id='listings' class='listings'></div>
+
 </div>
 
 

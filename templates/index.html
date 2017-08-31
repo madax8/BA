@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <meta charset="UTF-8">
     <title>index</title>
 </head>
@@ -11,16 +12,17 @@
     <h1>Startseite der Komro Web Map</h1>
 
     <br>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h3>Kartenansichten</h3>
         <a href="map_default" >Karte</a>
         {% for g in geoj %}
         <br>
         <a href="/map/{{ g.name }}">{{ g.name }}</a>
         {% endfor %}
+        <br>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4 col-md-offset-4">
         <h3>Datenbanken</h3>
         <a href="all">Modems</a>
         <br>
@@ -28,7 +30,7 @@
         <br>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4 col-md-offset-4">
         <br>
         <br>
         <h3>Geojson(dauert länger)</h3>
