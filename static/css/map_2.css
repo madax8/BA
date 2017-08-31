@@ -43,7 +43,7 @@ a:hover {
 }
 
 .topbar{
-    height: 12vh;
+    height: 14vh;
 }
 .zurück {
     padding: 5px;
@@ -60,8 +60,7 @@ a:hover {
 .heading {
   background: #000;
   border: 1px solid #000;
-  height: 8vh;
-  line-height: 60px;
+  height: 7vh;
   padding: 0 10px;
   color: #fff;
 }
@@ -175,7 +174,6 @@ a:hover {
 #switch {
     right: 0%;
     bottom:0%;
-    width: 13%;
     position: absolute;
     background: rgba(255, 255, 255, 0.8);
     padding: 10px;

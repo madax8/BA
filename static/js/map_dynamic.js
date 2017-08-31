@@ -26,9 +26,7 @@ var map = new mapboxgl.Map({
     attributionControl: false,
     logoView: false,
 //    maxBounds: bounds // Sets bounds as max
-}).addControl(new mapboxgl.AttributionControl({
-        compact: true
-    }));
+}).addControl(new mapboxgl.AttributionControl(), 'top-left');//compact: true; zwischen den Klammern einfügen
 
 
 // Add zoom and rotation controls to the map.
@@ -272,7 +270,7 @@ var inputs = layerList.getElementsByTagName('input');
 function switchLayer(layer) {
     var layerId = layer.target.id;
     map.setStyle('mapbox://styles/mapbox/' + layerId + '-v10');
-     map.on('style.load', function() {
+    map.on('style.load', function() {
          map.addSource('single-point', {
         "type": "geojson",
         "data": mod
