@@ -364,6 +364,11 @@ map.on('load', function(){
     map.on('click', function(e) {
       // Query all the rendered points in the view
       var features = map.queryRenderedFeatures(e.point, { layers: ['modems'] });
+
+      var popUps = document.getElementsByClassName('mapboxgl-popup');
+      // Check if there is already a popup on the map and if so, remove it
+      if(popUps[0]) popUps[0].remove();
+
       if (features.length) {
         var clickedPoint = features[0];
         // 1. Fly to the point
@@ -465,26 +470,27 @@ function flyToAddress(currentFeature) {
 
 // Popup erstellen
 function createPopUp(currentFeature) {
-  var popUps = document.getElementsByClassName('mapboxgl-popup');
-  // Check if there is already a popup on the map and if so, remove it
-//    if(popUps[0]) popUps[0].remove();
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    // This has to be done here and in map.onclick to work right
+    if(popUps[0]) popUps[0].remove();
 
     // fühlt sich momentan nach einem schlechten Workaround an
     // Fargebung unterscheidet sich je nach inhalt des Properties
     if(currentFeature.properties.type == 'yes'){
-          var popup = new mapboxgl.Popup({})
+          var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:green;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
             .addTo(map);
     }else if(currentFeature.properties.type == 'restaurant'){
-          var popup = new mapboxgl.Popup()
+          var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:red;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
             .addTo(map);
     }else{
-          var popup = new mapboxgl.Popup()
+          var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:black;">' + currentFeature.properties.class + '</h3>' +
                 '<h4>' + currentFeature.properties.type + '</h4>')
