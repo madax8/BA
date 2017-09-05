@@ -394,7 +394,7 @@ map.on('load', function(){
         listing.classList.add('active');
 
         // Scroll to the Position on the List
-        var topPos = listing.offsetTop - 220;
+        var topPos = listing.offsetTop - 230;
         document.getElementById('listings').scrollTop = topPos;
       }
 
@@ -481,19 +481,25 @@ function createPopUp(currentFeature) {
           var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:green;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>')
+                '<h4>' + currentFeature.properties.type + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
             .addTo(map);
     }else if(currentFeature.properties.type == 'restaurant'){
           var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:red;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>')
+                '<h4>' + currentFeature.properties.type + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
             .addTo(map);
     }else{
           var popup = new mapboxgl.Popup({closeOnClick: false})
             .setLngLat(currentFeature.geometry.coordinates)
             .setHTML('<h3 style="background:black;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>')
+                '<h4>' + currentFeature.properties.type + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
+                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
             .addTo(map);
     }
 }

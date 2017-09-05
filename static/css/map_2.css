@@ -66,7 +66,7 @@ a:hover {
 }
 
 .listings {
-  max-height: 78vh;
+  max-height: 77vh;
   overflow-y: auto;
   border-bottom: 1px solid #000;
 }
@@ -125,7 +125,7 @@ a:hover {
 .mapboxgl-popup-content {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
   padding: 0;
-  width: 180px;
+  width: 200px;
 }
 
 
