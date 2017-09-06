@@ -263,8 +263,7 @@ $.getJSON(staticUrl, function(data){
     mod = data;
 })
 
-// layer wechseln ist etwas redundant
-// allerdings bietet mapbox keine wirklichen alternativen
+// Layerwechsel
 var layerList = document.getElementById('switch');
 var inputs = layerList.getElementsByTagName('input');
 function switchLayer(layer) {
@@ -277,6 +276,7 @@ for (var i = 0; i < inputs.length; i++) {
     inputs[i].onclick = switchLayer;
 }
 
+// beim Style/Layerwechsel müssen die eigenen Layer neu geladen werden.
 map.on('style.load', function() {
          map.addSource('single-point', {
         "type": "geojson",
@@ -298,7 +298,7 @@ map.on('style.load', function() {
                     ["building", "#223b53"],      //blau (Wohn)Gebäude
                     ["amenity", "#fbb03b"],   //gelb Dienstleitungen
                     ["office", "#B42222"],    //rot Büros
-                    ["shop","#349b4b"]         //grün einkaufen
+                    ["shop", "#349b4b"]         //grün einkaufen
                     ]
             },
             "circle-stroke-width": 3,        //stärke der umrandung
@@ -422,7 +422,7 @@ function buildLocationList(data) {
     // writing this long form over and over again.
     var prop = currentFeature.properties;
     // Select the listing container in the HTML and append a div
-    // with the class 'item' for each store
+    // with the class 'item' for each modem
     var listings = document.getElementById('listings');
     var listing = listings.appendChild(document.createElement('div'));
     listing.className = 'item';
@@ -438,11 +438,11 @@ function buildLocationList(data) {
 
     // Add an event listener for the links in the sidebar listing
     link.addEventListener('click', function(e) {
-      // Update the currentFeature to the store associated with the clicked link
+      // Update the currentFeature to the modem associated with the clicked link
       var clickedListing = data.features[this.dataPosition];
       // 1. Fly to the point associated with the clicked link
       flyToAddress(clickedListing);
-      // 2. Close all other popups and display popup for clicked store
+      // 2. Close all other popups and display popup for clicked modem
       createPopUp(clickedListing);
       // 3. Highlight listing in sidebar (and remove highlight for all other listings)
       var activeItem = document.getElementsByClassName('active');
@@ -451,8 +451,8 @@ function buildLocationList(data) {
       }
       this.parentNode.classList.add('active');
     });
-    // Create a new div with the class 'details' for each store
-    // and fill it with the city and phone number
+    // Create a new div with the class 'details' for each modem
+    // and fill it with the properties you want
     var details = listing.appendChild(document.createElement('div'));
     details.innerHTML = prop.display_name;
     details.innerHTML += '<br>' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];

@@ -179,19 +179,9 @@ def new_address():
 
 # save a json into the database
 def save_json(name, geojson):
-    # g = geoj.query.filter_by(name=name)
     save = geoj(name, geojson)
-
-    # if(g.name == name):
-    #     db.session.query().\
-    #         filter(geoj.name == name).\
-    #         update({"name": geojson})
-    #     db.session.commit()
-    # else:
-    #     db.session.add(save)
     db.session.add(save)
     db.session.commit()
-
     flash('Json was successfully saved')
 
 
