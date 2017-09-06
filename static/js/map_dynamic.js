@@ -270,7 +270,14 @@ var inputs = layerList.getElementsByTagName('input');
 function switchLayer(layer) {
     var layerId = layer.target.id;
     map.setStyle('mapbox://styles/mapbox/' + layerId + '-v10');
-    map.on('style.load', function() {
+
+}
+
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].onclick = switchLayer;
+}
+
+map.on('style.load', function() {
          map.addSource('single-point', {
         "type": "geojson",
         "data": mod
@@ -306,11 +313,6 @@ function switchLayer(layer) {
         },
     });
     });
-}
-for (var i = 0; i < inputs.length; i++) {
-    inputs[i].onclick = switchLayer;
-}
-
 
 // Implementierung mit Geojson
 map.on('load', function(){
