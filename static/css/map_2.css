@@ -38,14 +38,14 @@ a:hover {
   top: 0;
   left: 0;
   overflow: hidden;
-  border-right: 1px solid #000;
+  border-right: 2px solid #000;
   z-index: 1001;
 }
 
 .topbar{
     height: 14vh;
 }
-.zurück {
+#zurück {
     padding: 5px;
 }
 
@@ -59,14 +59,14 @@ a:hover {
 
 .heading {
   background: #000;
-  border: 1px solid #000;
-  height: 7vh;
-  padding: 0 10px;
+  border: 2px solid #000;
+  height: 8vh;
   color: #fff;
+  padding-left: 10px;
 }
 
 .listings {
-  max-height: 77vh;
+  max-height: 76vh;
   overflow-y: auto;
   border-bottom: 1px solid #000;
 }
@@ -149,7 +149,7 @@ a:hover {
 }
 
 .mapboxgl-popup-content h4 {
-  margin: 0;
+  margin: -5px;
   display: block;
   padding: 10px;
   font-weight: 400;

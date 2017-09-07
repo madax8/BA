@@ -2,24 +2,19 @@
 <html>
 
 <head>
-
-<title>Web Map</title>
-
+    <title>Web Map</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
     <!--Leaflet Zeug-->
     <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />-->
     <!--<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
-
     <!--Mapbox-->
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />
     <!--Geocoder-->
     <!--<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>-->
     <!--<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />-->
-
     <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/map_2.css') }}">
     <!--jquery-->
@@ -34,6 +29,7 @@
 <body>
     <div id="map" class="map">
     </div>
+
     <div id="switch">
         <input id='streets' type='radio' name='rtoggle' value='streets' checked='checked'>
         <label for='streets'>Karte</label>
@@ -43,18 +39,14 @@
 
     <div class='sidebar'>
         <div class="topbar">
-                        <h2>Kartenansicht für: {{ jsonName }}</h2>
-            <a class="zurück" href="/">zurück zur Übersicht</a>
+            <h2>Kartenansicht für: {{ jsonName }}</h2>
+            <a id="zurück" href="/">zurück zur Übersicht</a>
         </div>
-
-         <div class='heading'>
-                <h3>Modemliste</h3>
-            </div>
-            <div id='listings' class='listings'></div>
-
-</div>
-
-
+        <div class='heading'>
+            <h3>Modemliste</h3>
+        </div>
+        <div id='listings' class='listings'></div>
+    </div>
 
 <script src="{{ url_for('static', filename='js/map_dynamic.js') }}"></script>
 </body>
