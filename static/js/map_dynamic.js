@@ -348,15 +348,15 @@ map.on('load', function(){
                     ["shop","green"]
                     ]
             },
-            "circle-stroke-width": 3,        //stärke der umrandung
-            "circle-stroke-color": {
-                "property": "type",
-                "type": "categorical",
-                "stops": [
-                    ["yes", "green"],         //standardtyp bzw. kein spezieller typ
-                    ["restaurant", "red"]
-                ]
-            }
+//            "circle-stroke-width": 3,        //stärke der umrandung
+//            "circle-stroke-color": {
+//                "property": "type",
+//                "type": "categorical",
+//                "stops": [
+//                    ["yes", "green"],         //standardtyp bzw. kein spezieller typ
+//                    ["restaurant", "red"]
+//                ]
+//            }
         },
     });
 
@@ -476,34 +476,25 @@ function createPopUp(currentFeature) {
     // Check if there is already a popup on the map and if so, remove it
     // This has to be done here and in map.onclick to work right
     if(popUps[0]) popUps[0].remove();
-
+    var backColor = '<h3 style="background:black;">';
     // fühlt sich momentan nach einem schlechten Workaround an
     // Fargebung unterscheidet sich je nach inhalt des Properties
-    if(currentFeature.properties.type == 'yes'){
-          var popup = new mapboxgl.Popup({closeOnClick: false})
-            .setLngLat(currentFeature.geometry.coordinates)
-            .setHTML('<h3 style="background:green;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
-            .addTo(map);
-    }else if(currentFeature.properties.type == 'restaurant'){
-          var popup = new mapboxgl.Popup({closeOnClick: false})
-            .setLngLat(currentFeature.geometry.coordinates)
-            .setHTML('<h3 style="background:red;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
-            .addTo(map);
-    }else{
-          var popup = new mapboxgl.Popup({closeOnClick: false})
-            .setLngLat(currentFeature.geometry.coordinates)
-            .setHTML('<h3 style="background:black;">' + currentFeature.properties.class + '</h3>' +
-                '<h4>' + currentFeature.properties.type + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
-                + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
-            .addTo(map);
+    if(currentFeature.properties.class == 'building'){
+        backColor = '<h3 style="background:darkblue;">';
+    }else if(currentFeature.properties.class == 'amenity'){
+        backColor = '<h3 style="background:orange;">';
+    }else if(currentFeature.properties.class == 'office'){
+        backColor = '<h3 style="background:red;">';
+    }else if(currentFeature.properties.class == 'shop'){
+        backColor = '<h3 style="background:green">';
     }
+    var popup = new mapboxgl.Popup({closeOnClick: false})
+        .setLngLat(currentFeature.geometry.coordinates)
+        .setHTML(backColor + currentFeature.properties.class + '</h3>' +
+            '<h4>' + currentFeature.properties.type + '</h4>'
+            + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
+            + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
+        .addTo(map);
 }
 
 
