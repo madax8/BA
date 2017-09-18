@@ -35,8 +35,8 @@ map.addControl(new mapboxgl.NavigationControl());
 // fullscreen
 map.addControl(new mapboxgl.FullscreenControl());
 
-//jedes feature enthält die Koordinaten des Punktes im geometry Teil
-//im Property Teil kann man selbst die Daten eines Modems hinzufügen
+// jedes feature enthält die Koordinaten des Punktes im geometry Teil
+// im Property Teil kann man selbst die Daten eines Modems hinzufügen
 var mod = {
   "type": "FeatureCollection",
   "features": [
@@ -269,7 +269,6 @@ var inputs = layerList.getElementsByTagName('input');
 function switchLayer(layer) {
     var layerId = layer.target.id;
     map.setStyle('mapbox://styles/mapbox/' + layerId + '-v10');
-
 }
 
 for (var i = 0; i < inputs.length; i++) {
@@ -295,21 +294,21 @@ map.on('style.load', function() {
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "#223b53"],      //blau (Wohn)Gebäude
-                    ["amenity", "#fbb03b"],   //gelb Dienstleitungen
-                    ["office", "#B42222"],    //rot Büros
-                    ["shop", "#349b4b"]         //grün einkaufen
+                    ["building", "black"],
+                    ["amenity", "orange"],
+                    ["office", "red"],
+                    ["shop","green"]
                     ]
             },
-            "circle-stroke-width": 3,        //stärke der umrandung
-            "circle-stroke-color": {
-                "property": "type",
-                "type": "categorical",
-                "stops": [
-                    ["yes", "#349b4b"],         //standardtyp bzw. kein spezieller typ
-                    ["restaurant", "#B42222"]
-                ]
-            }
+//            "circle-stroke-width": 3,        //stärke der umrandung
+//            "circle-stroke-color": {
+//                "property": "type",
+//                "type": "categorical",
+//                "stops": [
+//                    ["yes", "#349b4b"],         //standardtyp bzw. kein spezieller typ
+//                    ["restaurant", "#B42222"]
+//                ]
+//            }
         },
     });
     });
@@ -317,6 +316,7 @@ map.on('style.load', function() {
 // Implementierung mit Geojson
 map.on('load', function(){
 
+    // regelmäßige aktualisierung der Daten
     window.setInterval(function() {
         $.getJSON(staticUrl, function(data){
             mod = data;
@@ -324,25 +324,27 @@ map.on('load', function(){
         map.getSource(mod);
     }, 10000);
 
+    // hinterlegt die Datenquelle für die Karte
     map.addSource('point', {
         "type": "geojson",
         "data": mod
     });
 
+    // stellt die entsprechende Datenquelle dar
     map.addLayer({
         "id": "modems",
         "type": "circle",
         "source": "point",
         "paint": {
         'circle-radius': {
-                'base': 1.75,
+                'base': 1.6,
                 'stops': [[12, 2], [22, 180]]
             },
             "circle-color": {
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "darkblue"],
+                    ["building", "black"],
                     ["amenity", "orange"],
                     ["office", "red"],
                     ["shop","green"]
@@ -401,7 +403,7 @@ map.on('load', function(){
       }
 
     map.on('mouseenter', 'modems', function(e){
-        // get a nice looking cursor
+        // looks like a link cursor
         map.getCanvas().style.cursor = 'pointer';
       })
 
@@ -476,11 +478,11 @@ function createPopUp(currentFeature) {
     // Check if there is already a popup on the map and if so, remove it
     // This has to be done here and in map.onclick to work right
     if(popUps[0]) popUps[0].remove();
-    var backColor = '<h3 style="background:black;">';
-    // fühlt sich momentan nach einem schlechten Workaround an
+
     // Fargebung unterscheidet sich je nach inhalt des Properties
+    var backColor = '<h3 style="background:black;">';
     if(currentFeature.properties.class == 'building'){
-        backColor = '<h3 style="background:darkblue;">';
+        backColor = '<h3 style="background:black;">';
     }else if(currentFeature.properties.class == 'amenity'){
         backColor = '<h3 style="background:orange;">';
     }else if(currentFeature.properties.class == 'office'){
@@ -490,10 +492,12 @@ function createPopUp(currentFeature) {
     }
     var popup = new mapboxgl.Popup({closeOnClick: false})
         .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML(backColor + currentFeature.properties.class + '</h3>' +
+        .setHTML(
+            backColor + currentFeature.properties.class + '</h3>' +
             '<h4>' + currentFeature.properties.type + '</h4>'
             + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
-            + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>')
+            + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>'
+            )
         .addTo(map);
 }
 
