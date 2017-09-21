@@ -26,7 +26,7 @@ var map = new mapboxgl.Map({
     attributionControl: false,
     logoView: false,
 //    maxBounds: bounds // Sets bounds as max
-}).addControl(new mapboxgl.AttributionControl(), 'top-left');//compact: true; zwischen den Klammern einfügen
+}).addControl(new mapboxgl.AttributionControl(), 'top-left');
 
 
 // Add zoom and rotation controls to the map.
@@ -294,7 +294,7 @@ map.on('style.load', function() {
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "black"],
+                    ["building", "darkblue"],
                     ["amenity", "orange"],
                     ["office", "red"],
                     ["shop","green"]
@@ -344,7 +344,7 @@ map.on('load', function(){
                 "property": "class",
                 "type": "categorical",
                 "stops": [
-                    ["building", "black"],
+                    ["building", "darkblue"],
                     ["amenity", "orange"],
                     ["office", "red"],
                     ["shop","green"]
@@ -482,7 +482,7 @@ function createPopUp(currentFeature) {
     // Fargebung unterscheidet sich je nach inhalt des Properties
     var backColor = '<h3 style="background:black;">';
     if(currentFeature.properties.class == 'building'){
-        backColor = '<h3 style="background:black;">';
+        backColor = '<h3 style="background:darkblue;">';
     }else if(currentFeature.properties.class == 'amenity'){
         backColor = '<h3 style="background:orange;">';
     }else if(currentFeature.properties.class == 'office'){
@@ -493,8 +493,8 @@ function createPopUp(currentFeature) {
     var popup = new mapboxgl.Popup({closeOnClick: false})
         .setLngLat(currentFeature.geometry.coordinates)
         .setHTML(
-            backColor + currentFeature.properties.class + '</h3>' +
-            '<h4>' + currentFeature.properties.type + '</h4>'
+            backColor + currentFeature.properties.class + '</h3>'
+            + '<h4>' + currentFeature.properties.type + '</h4>'
             + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
             + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>'
             )
