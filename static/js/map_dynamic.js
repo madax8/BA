@@ -38,219 +38,51 @@ map.addControl(new mapboxgl.FullscreenControl());
 // jedes feature enthält die Koordinaten des Punktes im geometry Teil
 // im Property Teil kann man selbst die Daten eines Modems hinzufügen
 var mod = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Am Innreit 2",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.13210344314575,
-          47.85496963855513
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Innstraße 36",
-        "data": "notok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132704257965088,
-          47.85456648450546
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Innstraße 27",
-        "data": "maybe"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132446765899658,
-          47.854915644890994
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem4",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132736444473267,
-          47.85494444151888
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem5",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.13239312171936,
-          47.854580882918334
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem6",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132226824760435,
-          47.85540518538998
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem7",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.130944728851318,
-          47.85496603897929
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem8",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132961750030516,
-          47.855379988565346
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem9",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.131373882293701,
-          47.85517481396618
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem10",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.130815982818604,
-          47.854670872908336
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem11",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.132972478866577,
-          47.853882555287754
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem12",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.13063359260559,
-          47.855883922731486
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem13",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.130064964294434,
-          47.855066827008955
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem14",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.129389047622679,
-          47.85566795154572
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "modem15",
-        "data": "ok"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          12.130719423294067,
-          47.8542533180359
-        ]
-      }
-    }
-  ]
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+            "name": "Am Innreit 2",
+            "data": "ok"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    12.13210344314575,
+                    47.85496963855513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Innstraße 36",
+                "data": "notok"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    12.132704257965088,
+                    47.85456648450546
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Innstraße 27",
+                "data": "maybe"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    12.132446765899658,
+                    47.854915644890994
+                ]
+            }
+        },
+    ]
 };
 
 
@@ -499,6 +331,3 @@ function createPopUp(currentFeature) {
             + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>'
         ).addTo(map);
 }
-
-
-
