@@ -468,7 +468,7 @@ function flyToAddress(currentFeature) {
     center: currentFeature.geometry.coordinates,
     offset: [200,0],
     zoom: 16,
-    speed: 0.6
+    speed: 0.7
   });
 }
 
