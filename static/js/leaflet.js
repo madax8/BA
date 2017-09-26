@@ -69,67 +69,57 @@ map.on('load', function(){
     $(document).ajaxStop(function(){
         buildLocationList(mod);
     });
-      // Add an event listener for when a user clicks on the map
-    // map.on('click', function(e) {
-    //     // Query all the rendered points in the view
-    //     var features = map.queryRenderedFeatures(e.point, { layers: ['modems'] });
-    //
-    //     // var popUps = document.getElementsByClassName('mapboxgl-popup');
-    //     // Check if there is already a popup on the map and if so, remove it
-    //     // if(popUps[0]) popUps[0].remove();
-    //
-    //     if (features.length) {
-    //         var clickedPoint = features[0];
-    //         // 1. Fly to the point
-    //         // flyToAddress(clickedPoint);
-    //         // 2. Close all other popups and display popup for clicked store
-    //         // createPopUp(clickedPoint);
-    //         // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-    //         var activeItem = document.getElementsByClassName('active');
-    //         if (activeItem[0]) {
-    //             activeItem[0].classList.remove('active');
-    //         }
-    //         // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
-    //         var selectedFeature = clickedPoint.properties.display_name;
-    //
-    //
-    //         for (var i = 0; i < mod.features.length; i++) {
-    //             if (mod.features[i].properties.display_name === selectedFeature) {
-    //                 selectedFeatureIndex = i;
-    //             }
-    //         }
-    //         // Select the correct list item using the found index and add the active class
-    //         var listing = document.getElementById('listing-' + selectedFeatureIndex);
-    //         listing.classList.add('active');
-    //
-    //         // Scroll to the Position on the List
-    //         var topPos = listing.offsetTop - 230;
-    //         document.getElementById('listings').scrollTop = topPos;
-    //     }
-    //
-    //     map.on('mouseenter', 'modems', function(e){
-    //         // looks like a link cursor
-    //         map.getCanvas().style.cursor = 'pointer';
-    //     })
-    //
-    //     map.on('mouseleave', 'modems', function(){
-    //         map.getCanvas().style.cursor = '';
-    //     })
-    //
-    // });
 });
 map.setView([47.854954, 12.131016], 13);
 
+// Add an event listener for when a user clicks on the map
+// todo
+map.on('click', function(e) {
+        // Query all the rendered points in the view
+        var features = e.target;
+
+        // var popUps = document.getElementsByClassName('mapboxgl-popup');
+        // Check if there is already a popup on the map and if so, remove it
+        // if(popUps[0]) popUps[0].remove();
+
+        if (features.length) {
+            var clickedPoint = features;
+            // 1. Fly to the point
+            // flyToAddress(clickedPoint);
+            // 2. Close all other popups and display popup for clicked store
+            // createPopUp(clickedPoint);
+            // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+            var activeItem = document.getElementsByClassName('active');
+            if (activeItem[0]) {
+                activeItem[0].classList.remove('active');
+            }
+            // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
+            var selectedFeature = clickedPoint.properties.display_name;
+
+
+            for (var i = 0; i < mod.features.length; i++) {
+                if (mod.features[i].properties.display_name === selectedFeature) {
+                    selectedFeatureIndex = i;
+                }
+            }
+            // Select the correct list item using the found index and add the active class
+            var listing = document.getElementById('listing-' + selectedFeatureIndex);
+            listing.classList.add('active');
+
+            // Scroll to the Position on the List
+            var topPos = listing.offsetTop - 230;
+            document.getElementById('listings').scrollTop = topPos;
+        }
+    });
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 19,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMnB5eXpvMTAwNDMzM2xrdDF0eW02bTkifQ.VxANLxzX8ALvUIDG7y6FLQ'
 }).addTo(map);
 
-
-// mymap.on('click', onMapClick);
+// define different colored marker icons
 var greenIcon = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -164,11 +154,11 @@ var orangeIcon = new L.Icon({
 });
 
 var markers = L.markerClusterGroup({
-    // icon: greenIcon,
     maxClusterRadius: 30,
     spiderfyOnMaxZoom: true
 });
 
+// Creating Markers and Popups from the Geojsonsource + add it to the Map
 $(document).ajaxStop(function () {
     var geoJsonLayer = L.geoJson(mod, {
         pointToLayer: function (feature, latlng) {
@@ -255,27 +245,6 @@ function buildLocationList(data) {
     }
     // flyToAddress(data.features[0]);
 }
-// map.addLayer(markers);
 
-// Karte auf Feature zentrieren
-// function flyToAddress(currentFeature) {
-//     map.flyTo({
-//         center: currentFeature.geometry.coordinates,
-//         offset: [200,0],
-//         zoom: 16,
-//         speed: 0.7
-//     });
-// }
 
-// Popup erstellen
-function createPopUp(currentFeature) {
 
-    var popup = new Popup({closeOnClick: false})
-        .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML(
-            backColor + currentFeature.properties.class + '</h3>'
-            + '<h4>' + currentFeature.properties.type + '</h4>'
-            + '<h4>' + currentFeature.geometry.coordinates[0] + '</h4>'
-            + '<h4>' + currentFeature.geometry.coordinates[1] + '</h4>'
-        ).addTo(map);
-}

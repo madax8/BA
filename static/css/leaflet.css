@@ -146,7 +146,7 @@ a:hover {
   display: block;
   padding: 10px;
   border-radius: 5px 5px 0 0;
-  font-weight: 700;
+  font-weight: 800;
   margin-top: -15px;
 }
 
@@ -185,5 +185,11 @@ a:hover {
     color: #000;
 }
 
+.marker-cluster {
+    background: royalblue;
+    color: white;
+}
 
-
+.marker-cluster div {
+    background: mediumblue;
+}
