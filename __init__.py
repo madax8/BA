@@ -191,6 +191,15 @@ def show_geojson():
     return render_template('geojson.html', geoj=geoj.query.all())
 
 
+@app.route('/leaflet')
+def show_leaflet():
+    return render_template('leaflet.html')
+
+
+@app.route('/spiderfy')
+def show_spiderfy():
+    return render_template('spiderfier_example.html')
+
 # overwrites a geojson with new data
 # later this strings have to be replaced with a parameter array
 @app.route('/create/<name>')
@@ -217,6 +226,7 @@ def create_geojson(name):
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 5")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 10")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 7")).raw)
+    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")).raw)

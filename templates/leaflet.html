@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>leaflet</title>
+     <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"-->
+   <!--integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="-->
+   <!--crossorigin=""/>-->
+
+   <!-- leaflet und cluster zeug-->
+    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
+
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+            <!--jquery-->
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
+
+
+
+</head>
+<body>
+    <div id="map" class="map">
+    </div>
+
+    <div id="switch">
+        <input id='streets' type='radio' name='rtoggle' value='streets' checked='checked'>
+        <label for='streets'>Karte</label>
+        <input id='satellite-streets' type='radio' name='rtoggle' value='satellite-streets'>
+        <label for='satellite-streets'>Satellit</label>
+    </div>
+
+    <div class='sidebar'>
+        <div class="topbar">
+            <h2>Kartenansicht für: {{ jsonName }}</h2>
+            <a id="zurück" href="/">zurück zur Übersicht</a>
+        </div>
+        <div class='heading'>
+            <h3>Modemliste</h3>
+        </div>
+        <div id='listings' class='listings'></div>
+    </div>
+
+
+<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+</body>
+</html>

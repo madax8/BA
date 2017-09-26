@@ -93,7 +93,7 @@ jN = jN.substring(4);
 staticUrl = '/return_geojson' + jN;
 $.getJSON(staticUrl, function(data){
     mod = data;
-})
+});
 
 // Layerwechsel
 var layerList = document.getElementById('switch');
@@ -162,37 +162,59 @@ map.on('load', function(){
         "data": mod
     });
 
-    // stellt die entsprechende Datenquelle dar
-    map.addLayer({
-        "id": "modems",
-        "type": "circle",
-        "source": "point",
-        "paint": {
-            'circle-radius': {
-                'base': 1.6,
-                'stops': [[12, 2], [22, 180]]
-            },
-            "circle-color": {
-                "property": "class",
-                "type": "categorical",
-                "stops": [
-                    ["building", "darkblue"],
-                    ["amenity", "orange"],
-                    ["office", "red"],
-                    ["shop","green"]
-                ]
-            },
-//            "circle-stroke-width": 3,        //stärke der umrandung
-//            "circle-stroke-color": {
-//                "property": "type",
-//                "type": "categorical",
-//                "stops": [
-//                    ["yes", "green"],         //standardtyp bzw. kein spezieller typ
-//                    ["restaurant", "red"]
-//                ]
-//            }
-        }
-    });
+    // // stellt die entsprechende Datenquelle dar
+    // map.addLayer({
+    //     "id": "modems",
+    //     "type": "circle",
+    //     "source": "point",
+    //     "paint": {
+    //         'circle-radius': {
+    //             'base': 1.6,
+    //             'stops': [[12, 2], [22, 180]]
+    //         },
+    //         "circle-color": {
+    //             "property": "class",
+    //             "type": "categorical",
+    //             "stops": [
+    //                 ["building", "darkblue"],
+    //                 ["amenity", "orange"],
+    //                 ["office", "red"],
+    //                 ["shop","green"]
+    //             ]
+    //         },
+    //        "circle-stroke-width": 3,        //stärke der umrandung
+    //        "circle-stroke-color": {
+    //            "property": "type",
+    //            "type": "categorical",
+    //            "stops": [
+    //                ["yes", "green"],         //standardtyp bzw. kein spezieller typ
+    //                ["restaurant", "red"]
+    //            ]
+    //        }
+    //     }
+    // });
+
+    // map.addLayer({
+    //     "id": "modems",
+    //     "type": "symbol",
+    //     "source": "point",
+    //     "layout": {
+    //         // "text-font": ["Lato Black"],
+    //         // "text-padding": 20,
+    //         // "text-anchor": "top",
+    //         // "text-offset": [0, -2.3],
+    //         // "text-allow-overlap": true,
+    //         // "text-justify": "center",
+    //         "icon-offset": [0, -2],
+    //         "icon-image": "marker-11",
+    //         "icon-size": 2.5,
+    //         // "symbol-avoid-edges": true,
+    //         // "icon-allow-overlap": true
+    //     },
+    //     "paint": {
+    //         "icon-color" : "#ff0000"
+    //     }
+    // })
 
     buildLocationList(mod);
 
@@ -320,7 +342,7 @@ function createPopUp(currentFeature) {
     }else if(currentFeature.properties.class == 'office'){
         backColor = '<h3 style="background:red;">';
     }else if(currentFeature.properties.class == 'shop'){
-        backColor = '<h3 style="background:green">';
+        backColor = '<h3 style="background:green;">';
     }
     var popup = new mapboxgl.Popup({closeOnClick: false})
         .setLngLat(currentFeature.geometry.coordinates)

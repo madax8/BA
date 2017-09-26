@@ -252,7 +252,7 @@ var mod = {
 
 
 // müsste man eigentlich beim Seitenaufruf mitgegeben bekommen
-staticUrl = './static/test_1.geojson'
+staticUrl = './static/test_1.geojson';
 $.getJSON(staticUrl, function(data){
     mod = data;
 })
