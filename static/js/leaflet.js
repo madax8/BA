@@ -82,7 +82,7 @@ var blueIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 var orangeIcon = new L.Icon({
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -91,7 +91,7 @@ var orangeIcon = new L.Icon({
 });
 
 var markers = L.markerClusterGroup({
-    maxClusterRadius: 25,
+    maxClusterRadius: 30,
     spiderfyOnMaxZoom: true
 });
 
@@ -102,31 +102,34 @@ $(document).ajaxStop(function () {
             if(feature.properties.class == 'building'){
                 return L.marker(latlng, {icon: blueIcon}).on('click', onMarkerClick);
             }else if(feature.properties.class == 'amenity'){
-                return L.marker(latlng, {icon: orangeIcon});
+                return L.marker(latlng, {icon: orangeIcon}).on('click', onMarkerClick);
             }else if(feature.properties.class == 'office'){
-                return L.marker(latlng, {icon: redIcon});
+                return L.marker(latlng, {icon: redIcon}).on('click', onMarkerClick);
             }else if(feature.properties.class == 'shop'){
-                return L.marker(latlng, {icon: greenIcon});
+                return L.marker(latlng, {icon: greenIcon}).on('click', onMarkerClick);
             }
+            return L.marker(latlng).on('click', onMarkerClick);
         },
         onEachFeature: function (feature, layer){
+            var popup = L.popup();
+            var cName = 'blue';
             // Fargebung unterscheidet sich je nach inhalt des Properties
-            var backColor = '<h3 style="color:black;">';
             if(feature.properties.class == 'building'){
-                backColor = '<h3 style="color:darkblue;">';
+                cName = 'blue';
             }else if(feature.properties.class == 'amenity'){
-                backColor = '<h3 style="color:orange;">';
+                cName = 'orange';
             }else if(feature.properties.class == 'office'){
-                backColor = '<h3 style="color:red;">';
+                cName = 'red';
             }else if(feature.properties.class == 'shop'){
-                backColor = '<h3 style="color:green;">';
+                cName = 'green';
             }
-            layer.bindPopup(
-                backColor + feature.properties.class + '</h3>'
+            popup.setContent(
+                '<h3>' + feature.properties.class + '</h3>'
                 + '<h4>' + feature.properties.type + '</h4>'
                 + '<h4>' + feature.geometry.coordinates[0] + '</h4>'
                 + '<h4>' + feature.geometry.coordinates[1] + '</h4>'
             );
+            layer.bindPopup(popup,{className: cName});
         }
     });
     markers.addLayer(geoJsonLayer);
@@ -167,6 +170,7 @@ function buildLocationList(data) {
             map.setView(new L.LatLng(clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]), 18);
             // 2. Close all other popups and display popup for clicked modem
             // createPopUp(clickedListing);
+            // markers.openPopup();
             // 3. Highlight listing in sidebar (and remove highlight for all other listings)
             var activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {

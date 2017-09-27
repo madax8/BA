@@ -38,7 +38,7 @@ a:hover {
   top: 0;
   left: 0;
   overflow: hidden;
-  border-right: 2px solid #000;
+  border-right: 1px solid #000;
   z-index: 1001;
 }
 
@@ -58,11 +58,12 @@ a:hover {
 }
 
 .heading {
-  background: #000;
-  border: 2px solid #000;
+  background: #257ECA;
+  border: 2px solid #257ECA;
   height: 8vh;
   color: #fff;
   padding-left: 10px;
+  border-bottom: 1px solid black;
 }
 
 .listings {
@@ -83,17 +84,18 @@ a:hover {
 
 .listings .item .title {
   display: block;
-  color: #0004ff;
+  color: #1D77C8;
   font-weight: 700;
 }
 
 .listings .item .title small { font-weight: 400; }
 
-.listings .item.active .title,
-.listings .item .title:hover { color: #6d6fff; }
+.listings .item.active .title { color: white; }
+.listings .item .title:hover { color: #3d90db; }
 
 .listings .item.active {
-  background-color: #e0f3ff;
+  background-color: #257ECA;
+  color: white;
 }
 
 ::-webkit-scrollbar {
@@ -126,6 +128,7 @@ a:hover {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
   padding: 0;
   width: 250px;
+  color: white;
 }
 
 
@@ -133,15 +136,50 @@ a:hover {
     display: none;
 }
 
-.leaflet-popup-content-wrapper {
+
+.leaflet-popup-content-wrapper{
   padding: 1%;
-  /*background: darkblue;*/
+  /*background: red;*/
     /*color: white;*/
+  opacity: 0.9;
+}
+
+.red
+  .leaflet-popup-content-wrapper{
+    background: #CA2639;
+  }
+.red .leaflet-popup-tip{
+  background: #CA2639;
+    opacity: 0.9;
+}
+.blue
+  .leaflet-popup-content-wrapper{
+    background: #257ECA;
+  }
+.blue .leaflet-popup-tip{
+  background: #257ECA;
+    opacity: 0.9;
+}
+.orange
+  .leaflet-popup-content-wrapper{
+    background: #CAC424;
+  }
+.orange .leaflet-popup-tip{
+  background: #CAC424;
+    opacity: 0.9;
+}
+.green
+  .leaflet-popup-content-wrapper{
+    background: #26AD23;
+}
+.green .leaflet-popup-tip{
+  background: #26AD23;
+    opacity: 0.9;
 }
 
 .leaflet-popup-content h3 {
   /*background: #0004ff;*/
-  color: black;
+  color: white;
   margin: 0;
   display: block;
   padding: 10px;
@@ -155,6 +193,7 @@ a:hover {
   display: block;
   padding: 10px;
   font-weight: 400;
+  color: white;
 }
 
 .leaflet-popup-content div {
@@ -173,6 +212,7 @@ a:hover {
   border-bottom-color: #fff;
 }
 
+
 #switch {
     right: 0%;
     bottom:0%;
@@ -186,10 +226,10 @@ a:hover {
 }
 
 .marker-cluster {
-    background: royalblue;
+    background: #3d90db;
     color: white;
 }
 
 .marker-cluster div {
-    background: mediumblue;
+    background: #1D77C8;
 }
