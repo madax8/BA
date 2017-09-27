@@ -1,51 +1,5 @@
 
-var mod = {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {
-            "name": "Am Innreit 2",
-            "data": "ok"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    12.13210344314575,
-                    47.85496963855513
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Innstraße 36",
-                "data": "notok"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    12.132704257965088,
-                    47.85456648450546
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Innstraße 27",
-                "data": "maybe"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    12.132446765899658,
-                    47.854915644890994
-                ]
-            }
-        },
-    ]
-};
+var mod = {};
 staticUrl = './return_geojson/all_4';
 $.getJSON(staticUrl, function(data){
     mod = data;
@@ -72,45 +26,28 @@ map.on('load', function(){
 });
 map.setView([47.854954, 12.131016], 13);
 
-// Add an event listener for when a user clicks on the map
-// todo
-map.on('click', function(e) {
-        // Query all the rendered points in the view
-        var features = e.target;
 
-        // var popUps = document.getElementsByClassName('mapboxgl-popup');
-        // Check if there is already a popup on the map and if so, remove it
-        // if(popUps[0]) popUps[0].remove();
-
-        if (features.length) {
-            var clickedPoint = features;
-            // 1. Fly to the point
-            // flyToAddress(clickedPoint);
-            // 2. Close all other popups and display popup for clicked store
-            // createPopUp(clickedPoint);
-            // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-            var activeItem = document.getElementsByClassName('active');
-            if (activeItem[0]) {
-                activeItem[0].classList.remove('active');
-            }
-            // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
-            var selectedFeature = clickedPoint.properties.display_name;
-
-
-            for (var i = 0; i < mod.features.length; i++) {
-                if (mod.features[i].properties.display_name === selectedFeature) {
-                    selectedFeatureIndex = i;
-                }
-            }
-            // Select the correct list item using the found index and add the active class
-            var listing = document.getElementById('listing-' + selectedFeatureIndex);
-            listing.classList.add('active');
-
-            // Scroll to the Position on the List
-            var topPos = listing.offsetTop - 230;
-            document.getElementById('listings').scrollTop = topPos;
+function onMarkerClick(e){
+    var clickedPoint = e.target;
+    var activeItem = document.getElementsByClassName('active');
+    if (activeItem[0]) {
+        activeItem[0].classList.remove('active');
+    }
+    // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
+    var selectedFeature = clickedPoint.feature.properties.display_name;
+    for (var i = 0; i < mod.features.length; i++) {
+        if (mod.features[i].properties.display_name === selectedFeature) {
+            selectedFeatureIndex = i;
         }
-    });
+    }
+    // Select the correct list item using the found index and add the active class
+    var listing = document.getElementById('listing-' + selectedFeatureIndex);
+    listing.classList.add('active');
+
+    // Scroll to the Position on the List
+    var topPos = listing.offsetTop - 230;
+    document.getElementById('listings').scrollTop = topPos;
+}
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -154,7 +91,7 @@ var orangeIcon = new L.Icon({
 });
 
 var markers = L.markerClusterGroup({
-    maxClusterRadius: 30,
+    maxClusterRadius: 25,
     spiderfyOnMaxZoom: true
 });
 
@@ -163,7 +100,7 @@ $(document).ajaxStop(function () {
     var geoJsonLayer = L.geoJson(mod, {
         pointToLayer: function (feature, latlng) {
             if(feature.properties.class == 'building'){
-                return L.marker(latlng, {icon: blueIcon});
+                return L.marker(latlng, {icon: blueIcon}).on('click', onMarkerClick);
             }else if(feature.properties.class == 'amenity'){
                 return L.marker(latlng, {icon: orangeIcon});
             }else if(feature.properties.class == 'office'){
@@ -227,7 +164,7 @@ function buildLocationList(data) {
             // Update the currentFeature to the modem associated with the clicked link
             var clickedListing = data.features[this.dataPosition];
             // 1. Fly to the point associated with the clicked link
-            // flyToAddress(clickedListing);
+            map.setView(new L.LatLng(clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]), 18);
             // 2. Close all other popups and display popup for clicked modem
             // createPopUp(clickedListing);
             // 3. Highlight listing in sidebar (and remove highlight for all other listings)
