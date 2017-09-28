@@ -139,7 +139,7 @@ a:hover {
 
 .leaflet-popup-content-wrapper{
   padding: 1%;
-  /*background: red;*/
+  background: grey;
     /*color: white;*/
   opacity: 0.9;
 }

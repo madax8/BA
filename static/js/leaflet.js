@@ -51,7 +51,7 @@ function onMarkerClick(e){
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 19,
+    maxZoom: 18,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMnB5eXpvMTAwNDMzM2xrdDF0eW02bTkifQ.VxANLxzX8ALvUIDG7y6FLQ'
 }).addTo(map);
@@ -111,25 +111,8 @@ $(document).ajaxStop(function () {
             return L.marker(latlng).on('click', onMarkerClick);
         },
         onEachFeature: function (feature, layer){
-            var popup = L.popup();
-            var cName = 'blue';
-            // Fargebung unterscheidet sich je nach inhalt des Properties
-            if(feature.properties.class == 'building'){
-                cName = 'blue';
-            }else if(feature.properties.class == 'amenity'){
-                cName = 'orange';
-            }else if(feature.properties.class == 'office'){
-                cName = 'red';
-            }else if(feature.properties.class == 'shop'){
-                cName = 'green';
-            }
-            popup.setContent(
-                '<h3>' + feature.properties.class + '</h3>'
-                + '<h4>' + feature.properties.type + '</h4>'
-                + '<h4>' + feature.geometry.coordinates[0] + '</h4>'
-                + '<h4>' + feature.geometry.coordinates[1] + '</h4>'
-            );
-            layer.bindPopup(popup,{className: cName});
+            var popup = createPopup(feature)
+            layer.bindPopup(popup);
         }
     });
     markers.addLayer(geoJsonLayer);
@@ -168,9 +151,9 @@ function buildLocationList(data) {
             var clickedListing = data.features[this.dataPosition];
             // 1. Fly to the point associated with the clicked link
             map.setView(new L.LatLng(clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]), 18);
-            // 2. Close all other popups and display popup for clicked modem
-            // createPopUp(clickedListing);
-            // markers.openPopup();
+            var popup = createPopup(clickedListing);
+            popup.setLatLng([clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]]);
+            popup.openOn(map);
             // 3. Highlight listing in sidebar (and remove highlight for all other listings)
             var activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {
@@ -187,5 +170,25 @@ function buildLocationList(data) {
     // flyToAddress(data.features[0]);
 }
 
-
-
+// erstellen eines Popup mit entsprechender Einfärbung und Inhalt
+function createPopup(feature){
+    var cName = 'blue';
+    // Fargebung unterscheidet sich je nach inhalt des Properties
+    if(feature.properties.class == 'building'){
+        cName = 'blue';
+    }else if(feature.properties.class == 'amenity'){
+        cName = 'orange';
+    }else if(feature.properties.class == 'office'){
+        cName = 'red';
+    }else if(feature.properties.class == 'shop'){
+        cName = 'green';
+    }
+    var popup = L.popup({className: cName});
+    popup.setContent(
+        '<h3>' + feature.properties.class + '</h3>'
+        + '<h4>' + feature.properties.type + '</h4>'
+        + '<h4>' + feature.geometry.coordinates[0] + '</h4>'
+        + '<h4>' + feature.geometry.coordinates[1] + '</h4>'
+    );
+    return popup;
+}
