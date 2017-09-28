@@ -119,7 +119,7 @@ def show_map():
 
 @app.route('/map/<name>')
 def show_map_dynamic(name):
-    return render_template('map_dynamic.html', jsonName=name)
+    return render_template('leaflet.html', jsonName=name)
 
 
 # just something to play around can be deleted
@@ -205,7 +205,7 @@ def show_spiderfy():
 @app.route('/create/<name>')
 def create_geojson(name):
     arr = []
-    # später in schleife verpacken ... Daten sollten dann von Datenbank kommen
+    # spaeter in schleife verpacken ... Daten sollten dann von Datenbank kommen
     arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 17")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 13")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 42")).raw)
@@ -273,6 +273,7 @@ def create_geojson(name):
     arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Tannenweg 7")).raw)
     arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 9")).raw)
     arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 31")).raw)
+    print(arr)
 
     save_json(name, convert_json(arr))
 
@@ -287,20 +288,25 @@ def create_geojson(name):
 # converts an array of nominatim raw data in a valid Geojson
 # maybe I can call the data-mapping method here
 def convert_json(ar):
-    import json
-    return json.dumps({ "type": "FeatureCollection",
-                        "features": [
-                                        {"type": "Feature",
-                                         "geometry": { "type": "Point",
-                                                       "coordinates": [ float(feat['lon']),
-                                                                        float(feat['lat'])]},
-                                         "properties": { key: value
-                                                         for key, value in feat.items()
-                                                         if key not in ('lat', 'lon', 'boundingbox') }
-                                         }
-                                        for feat in ar
+    j = {"type": "FeatureCollection",
+                    "features": [
+                                    {"type": "Feature",
+                                     "geometry": {"type": "Point",
+                                                  "coordinates": [float(feat['lon']),
+                                                                  float(feat['lat'])]},
+                                     "properties": {
+                                             "data": {"status": "ok"},
+                                             "osm": {key: value
+                                                     for key, value in feat.items()
+                                                     if key not in ('lat', 'lon', 'boundingbox')}
+                                            }
+                                     }for feat in ar
                                     ]
-                        })
+         }
+
+    j = json.dumps(j, indent=4)
+
+    return j
 
 
 # code thanks to time.sleep() very slow, but it has to be because of nominatims usage policy
