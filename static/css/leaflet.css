@@ -144,32 +144,28 @@ a:hover {
   opacity: 0.9;
 }
 
-.red
-  .leaflet-popup-content-wrapper{
+.red .leaflet-popup-content-wrapper{
     background: #CA2639;
   }
 .red .leaflet-popup-tip{
   background: #CA2639;
     opacity: 0.9;
 }
-.blue
-  .leaflet-popup-content-wrapper{
+.blue .leaflet-popup-content-wrapper{
     background: #257ECA;
   }
 .blue .leaflet-popup-tip{
   background: #257ECA;
     opacity: 0.9;
 }
-.orange
-  .leaflet-popup-content-wrapper{
+.yellow .leaflet-popup-content-wrapper{
     background: #CAC424;
   }
-.orange .leaflet-popup-tip{
+.yellow .leaflet-popup-tip{
   background: #CAC424;
     opacity: 0.9;
 }
-.green
-  .leaflet-popup-content-wrapper{
+.green .leaflet-popup-content-wrapper{
     background: #26AD23;
 }
 .green .leaflet-popup-tip{

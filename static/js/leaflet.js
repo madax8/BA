@@ -101,8 +101,9 @@ var yellowIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+// legt die Einstellungen für das Clusterverhalten fest
 var markers = L.markerClusterGroup({
-    maxClusterRadius: 35,
+    maxClusterRadius: 30,
     spiderfyOnMaxZoom: true
 });
 
@@ -196,7 +197,7 @@ function createPopup(feature){
     if(feature.properties.data.status === 'offline'){
         cName = 'blue';
     }else if(feature.properties.data.status === 'warning'){
-        cName = 'orange';
+        cName = 'yellow';
     }else if(feature.properties.data.status === 'error'){
         cName = 'red';
     }else if(feature.properties.data.status === 'ok'){

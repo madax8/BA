@@ -96,6 +96,7 @@ class geoj(db.Model):
         self.name = name
         self.jsondata = jsondata
 
+
 db.create_all()
 
 
@@ -105,7 +106,7 @@ def index():
     return render_template('index.html', geoj=geoj.query.all())
 
 
-# beispiel für attributübergabe
+# beispiel für attributuebergabe
 @app.route('/user/<username>')
 def show_user_profile(username):
     return 'Hello User %s!' % username
@@ -131,13 +132,13 @@ def show_circle():
 # Modems anzeigen
 @app.route('/all')
 def show_all():
-   return render_template('show_all.html', modems=modems.query.all())
+    return render_template('show_all.html', modems=modems.query.all())
 
 
 # Adressview anzeigen
 @app.route('/address')
 def show_address():
-   return render_template('address.html', address=address.query.all())
+    return render_template('address.html', address=address.query.all())
 
 
 # neue Modems
@@ -200,6 +201,7 @@ def show_leaflet():
 def show_spiderfy():
     return render_template('spiderfier_example.html')
 
+
 # overwrites a geojson with new data
 # later this strings have to be replaced with a parameter array
 @app.route('/create/<name>')
@@ -211,68 +213,85 @@ def create_geojson(name):
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 42")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 26")).raw)
     arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 25")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 16")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 27")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Bayerstraße 2")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 30")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 29")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 36")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 19")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 10")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 12")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 19")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 1")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 5")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 10")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 7")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 52")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 37")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 48")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Johannesweg 3")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Bach 2")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Dorfstraße 5")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Wasen 9")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Panger Straße 30")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Bergblick 9")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Mitteralmweg 33")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Mitteralmweg 19")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Rehleitenweg 3")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Hocheckstraße 8")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Königstraße 24")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Königstraße 11")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 3")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 16")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 32")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 6")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 12a")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 40")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 49")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 2")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 7")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 13")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Sepp-Heindl-Straße 7")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Dr.-Steinbeißer-Straße 2")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Finkenweg 1")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Finkenweg 11")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 6")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 14")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 32")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Erlenweg 13a")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ahornweg 5")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ulmenweg 7")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Birkenweg 10")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Buchenweg 12")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Hainholzstraße 16")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Tannenweg 7")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 9")).raw)
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 31")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 16")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 27")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Bayerstraße 2")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 30")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 29")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 36")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 19")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 10")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 12")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 19")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 1")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 5")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 10")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 7")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 52")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 37")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 48")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Johannesweg 3")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Bach 2")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Dorfstraße 5")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Wasen 9")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Panger Straße 30")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Bergblick 9")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Mitteralmweg 33")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Mitteralmweg 19")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Rehleitenweg 3")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Hocheckstraße 8")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Königstraße 24")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Königstraße 11")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 3")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 16")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Rackermoos 32")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 6")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 12a")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 40")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 49")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Alte Landstraße 2")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 7")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 13")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Sepp-Heindl-Straße 7")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Dr.-Steinbeißer-Straße 2")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Finkenweg 1")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Finkenweg 11")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 6")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 14")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Fichtenweg 32")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Erlenweg 13a")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ahornweg 5")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ulmenweg 7")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Birkenweg 10")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Buchenweg 12")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Hainholzstraße 16")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Tannenweg 7")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 9")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Eichenweg 31")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83024 Mitterweg 15")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83024 Danziger Strasse 6")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83024 Breslauer Strasse 8")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 42")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 64")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Herbststrasse 1")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
     print(arr)
 
     save_json(name, convert_json(arr))
@@ -289,20 +308,19 @@ def create_geojson(name):
 # maybe I can call the data-mapping method here
 def convert_json(ar):
     j = {"type": "FeatureCollection",
-                    "features": [
-                                    {"type": "Feature",
-                                     "geometry": {"type": "Point",
-                                                  "coordinates": [float(feat['lon']),
-                                                                  float(feat['lat'])]},
-                                     "properties": {
-                                             "data": {"status": "ok"},
-                                             "osm": {key: value
-                                                     for key, value in feat.items()
-                                                     if key not in ('lat', 'lon', 'boundingbox')}
-                                            }
-                                     }for feat in ar
-                                    ]
-         }
+         "features": [
+            {"type": "Feature",
+             "geometry": {"type": "Point",
+                          "coordinates": [float(feat['lon']),
+                                          float(feat['lat'])]},
+             "properties": {"data": {"status": "ok"},
+                            "osm": {key: value
+                                    for key, value in feat.items()
+                                    if key not in ('lat', 'lon', 'boundingbox')}
+                            }
+             }for feat in ar
+         ]
+    }
 
     j = json.dumps(j, indent=4)
 
@@ -320,7 +338,7 @@ def do_geocode(addr):
         return do_geocode(addr)
 
 
-# rückgabe des geojons an das Frontend
+# rueckgabe des geojons an das Frontend
 @app.route('/return_geojson/<name>')
 def return_geojson(name):
     g = geoj.query.filter_by(name=name).first()
