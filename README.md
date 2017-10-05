@@ -5,7 +5,9 @@ Die Einzelheiten sind in der Bachelorarbeit genauer beschrieben.
 
 ![Komplettansicht über die Modems](https://github.com/madax8/BA/blob/master/static/Komplettansicht.PNG)
 
-# Frontend:
+# Client:
+
+Der Client baut sich wie in einer Webanwendung üblich auf HTML, CSS und JS auf. Als zusätzliche Hilfsmittel werden nebem dem nativen JavaScript noch JQuery und Leaflet.js(einem Kartenframework) verwendet.
 
  
 Erstellt eine Variable mod und lädt sich anschließend das Geojson von Server in die Variable.
@@ -19,7 +21,7 @@ Erstellt eine Variable mod und lädt sich anschließend das Geojson von Server i
     });
 
  
-Mithilfe dieser Funktionen wird die Basiskarte initialisiert.
+Mithilfe dieser Funktionen wird die Basiskarte initialisiert. Die Kartenbasisdaten kommen von einer Mapbox API. 
 
     var map = L.map('map');
     map.setView([47.854954, 12.131016], 13);
@@ -68,9 +70,9 @@ Ein Zusätzlicher Eventhandler für den Click auf einen Marker, der weitere Funk
     }
 
 
-# Backend:
+# Server:
 
-Das Backend ist in Python geschrieben und die Serverfunktionalität wird durch das Flask Framework unterstützt.
+Das Backend ist in Python geschrieben und die Serverfunktionalität wird durch das Flask Framework unterstützt. Für eine einfachere Verwendung von Geokoding-APIs wird hier auf die Erweiterung geopy gesetzt. Desweiteren wurde SQLAlchemy zur besseren verwendung von Postgres Datenbanken verwendet.
 
 Hier finden sich als erste diverse Routingfunktionen.
 
