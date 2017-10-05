@@ -43,6 +43,31 @@ Zur Erstellung verschiedenfarbiger Marker wurde folgende API verwendet:
 https://github.com/pointhi/leaflet-color-markers
 
 
+Ein Zusätzlicher Eventhandler für den Click auf einen Marker, der weitere Funktionalität neben dem öffnen des Popups hinzufügt. Zum geklickten Marker auf der Karte wird das entsprechende Listenelement aktiv gesetzt, was eine optische hervorhebung zu folge hat, und die Liste so gescrollt, das dieses Element zu sehen ist.
+
+    function onMarkerClick(e){
+        var clickedPoint = e.target;
+        var activeItem = document.getElementsByClassName('active');
+        if (activeItem[0]) {
+            activeItem[0].classList.remove('active');
+        }
+        // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
+        var selectedFeature = clickedPoint.feature.properties.osm.display_name;
+        for (var i = 0; i < mod.features.length; i++) {
+            if (mod.features[i].properties.osm.display_name === selectedFeature) {
+                selectedFeatureIndex = i;
+            }
+        }
+        // Select the correct list item using the found index and add the active class
+        var listing = document.getElementById('listing-' + selectedFeatureIndex);
+        listing.classList.add('active');
+
+        // Scroll to the Position on the List
+        var topPos = listing.offsetTop - 230;
+        document.getElementById('listings').scrollTop = topPos;
+    }
+
+
 # Backend:
 
 Das Backend ist in Python geschrieben und die Serverfunktionalität wird durch das Flask Framework unterstützt.
