@@ -1,9 +1,9 @@
 # Komro Modemkarte
 
 Dies ist eine auf Leaflet basierende Kartenanwendung zur Darstellung von Modemdaten innerhalb einer Karte.
-Die Einzelheiten sind im Wiki genauer beschrieben.
+Die Einzelheiten sind in der Bachelorarbeit genauer beschrieben.
 
- 
+![Komplettansicht über die Modems](https://github.com/madax8/BA/blob/master/static/Komplettansicht.PNG)
 
 # Frontend:
 
