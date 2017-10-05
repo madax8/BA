@@ -43,3 +43,43 @@ Zur Erstellung verschiedenfarbiger Marker wurde folgende API verwendet:
 https://github.com/pointhi/leaflet-color-markers
 
 
+# Backend:
+
+Das Backend ist in Python geschrieben und die Serverfunktionalität wird durch das Flask Framework unterstützt.
+
+Hier finden sich als erste diverse Routingfunktionen.
+
+    @app.route('/map/<name>')
+    def show_map_dynamic(name):
+        return render_template('leaflet.html', jsonName=name)
+
+Desweiteren wird hier das Geocoding mithilfe einer Nominatim API durchgeführt.
+
+    def do_geocode(addr):
+        try:
+            return geolocator.geocode(addr)
+        except GeocoderTimedOut:
+            time.sleep(1)
+            return do_geocode(addr)
+ 
+Außerdem ist es mithilfe folgender Funktion möglich ein Array in ein Geojsonobjekt umzuwandeln.
+
+    def convert_json(ar):
+        j = {"type": "FeatureCollection",
+             "features": [
+                {"type": "Feature",
+                 "geometry": {"type": "Point",
+                              "coordinates": [float(feat['lon']),
+                                              float(feat['lat'])]},
+                 "properties": {"data": {"status": "ok"},
+                                "osm": {key: value
+                                        for key, value in feat.items()
+                                        if key not in ('lat', 'lon', 'boundingbox')}
+                                }
+                 }for feat in ar
+             ]
+        }
+
+        j = json.dumps(j, indent=4)
+
+        return j
