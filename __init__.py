@@ -106,27 +106,15 @@ def index():
     return render_template('index.html', geoj=geoj.query.all())
 
 
-# beispiel für attributuebergabe
+# beispiel fuer attributuebergabe
 @app.route('/user/<username>')
 def show_user_profile(username):
     return 'Hello User %s!' % username
 
 
-# a mapowerview over the complete set of modems
-@app.route('/map_default')
-def show_map():
-    return render_template('map_default.html')
-
-
 @app.route('/map/<name>')
 def show_map_dynamic(name):
     return render_template('leaflet.html', jsonName=name)
-
-
-# just something to play around can be deleted
-@app.route('/circle')
-def show_circle():
-    return render_template('circles.html')
 
 
 # Modems anzeigen
@@ -195,11 +183,6 @@ def show_geojson():
 @app.route('/leaflet')
 def show_leaflet():
     return render_template('leaflet.html')
-
-
-@app.route('/spiderfy')
-def show_spiderfy():
-    return render_template('spiderfier_example.html')
 
 
 # overwrites a geojson with new data

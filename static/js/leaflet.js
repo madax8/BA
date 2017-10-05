@@ -10,7 +10,7 @@ $.getJSON(staticUrl, function(data){
         // async: false
     })
 });
-    // // regelmäßige aktualisierung der Daten. Muss hier anders gelöst werden.
+    // // regelmäßige aktualisierung der Daten
     // window.setInterval(function() {
     //     $.getJSON(staticUrl, function(data){
     //         mod = data;
@@ -37,6 +37,7 @@ map.on('load', function(){
 map.setView([47.854954, 12.131016], 13);
 
 
+// zusätzlicher Eventhandler für den Klick auf einen Marker
 function onMarkerClick(e){
     var clickedPoint = e.target;
     var activeItem = document.getElementsByClassName('active');
