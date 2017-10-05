@@ -87,7 +87,6 @@ var mod = {
 
 
 // müsste man eigentlich beim Seitenaufruf mitgegeben bekommen
-//staticUrl = './static/test_1.geojson';
 jN = window.location.pathname;
 jN = jN.substring(4);
 staticUrl = '/return_geojson' + jN;
