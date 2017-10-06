@@ -5,6 +5,21 @@ Die Einzelheiten sind in der Bachelorarbeit genauer beschrieben.
 
 ![Komplettansicht über die Modems](https://github.com/madax8/BA/blob/master/static/Komplettansicht.PNG)
 
+
+# Startanleitung:
+Lokal benötigte Bibliotheken/Tools: pip, flask, geopy, sql-alchemy, jquery
+
+für Windows:
+* Falls verwendet virtuelle Umgebung starten mit: venv\Scripts\activate
+* Variablen setzen: 
+    * set FLASK_APP=__init__.py
+    * set FLASK_DEBUG=1             (Optional für Debugmodus)
+* Server starten mit: 
+    * flask run
+    * alternativ: python -m flask run
+
+für Linux muss beim setzen der variablen export statt set verwendet werden.
+
 # Client:
 
 Der Client baut sich wie in einer Webanwendung üblich auf HTML, CSS und JS auf. Als zusätzliche Hilfsmittel werden nebem dem nativen JavaScript noch JQuery und Leaflet.js(einem Kartenframework) verwendet.
@@ -41,9 +56,13 @@ CreatePopup dient er Erstellung der Popups und deren Formatierung.
 
     function createPopup(feature){...}
     
-Zur Erstellung verschiedenfarbiger Marker wurde folgende API verwendet:
-https://github.com/pointhi/leaflet-color-markers
+Zur Erstellung verschiedenfarbiger Marker wurde folgende API verwendet: https://github.com/pointhi/leaflet-color-markers
+Mithilfe von
 
+    L.marker(latlng, {icon: greenIcon}).on('click', onMarkerClick); 
+wird ein Marker erstellt und dann zu einem Layer hinzugefügt. Dieser Layer wird dann anschließend der Map angehängt.
+
+    map.addLayer(markers);
 
 Ein Zusätzlicher Eventhandler für den Click auf einen Marker, der weitere Funktionalität neben dem öffnen des Popups hinzufügt. Zum geklickten Marker auf der Karte wird das entsprechende Listenelement aktiv gesetzt, was eine optische hervorhebung zu folge hat, und die Liste so gescrollt, das dieses Element zu sehen ist.
 
