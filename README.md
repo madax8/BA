@@ -12,7 +12,7 @@ Lokal benötigte Bibliotheken/Tools: pip, flask, geopy, sql-alchemy, jquery
 für Windows:
 * Falls verwendet virtuelle Umgebung starten mit: venv\Scripts\activate
 * Variablen setzen: 
-    * set FLASK_APP=__init__.py
+    * set FLASK_APP=\_\_init\_\_.py
     * set FLASK_DEBUG=1             (Optional für Debugmodus)
 * Server starten mit: 
     * flask run
