@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import render_template
 from flask import request, flash, url_for, redirect
-# from models import db
 from flask_sqlalchemy import SQLAlchemy
 from flask import json
 # from flask import request
@@ -283,8 +282,6 @@ def create_geojson(name):
         f.write(convert_json(arr))
         # json.dump(convert_json(location.raw), f)
     return app.send_static_file(name + '.geojson')
-
-    # return "<a href=%s>file</a>" % url_for('static', filename='modem.geojson')
 
 
 # converts an array of nominatim raw data in a valid Geojson

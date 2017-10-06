@@ -85,8 +85,8 @@ var redIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-var blueIcon = new L.Icon({
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+var greyIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -109,20 +109,22 @@ var markers = L.markerClusterGroup({
 });
 
 // Erstelle Marker und Popups aus der Geojsonsource und fügt sie der Karte hinzu
-$(document).ajaxStop(function () {
-    i = 1;
+$(document).ajaxStop(function (){
+    i = 0;
     var geoJsonLayer = L.geoJson(mod, {
         pointToLayer: function (feature, latlng) {
             //Frontend Datenmanipulation für Demonstrationszwecke
+            i++;
             if( i % 2)
                 feature.properties.data.status = 'ok';
             else if ( i % 3)
                 feature.properties.data.status = 'warning';
-            else
+            else if ( i % 5)
                 feature.properties.data.status = 'error';
-            i++;
+            else
+                feature.properties.data.status = 'offline';
             if(feature.properties.data.status === 'offline'){
-                return L.marker(latlng, {icon: blueIcon}).on('click', onMarkerClick);
+                return L.marker(latlng, {icon: greyIcon}).on('click', onMarkerClick);
             }else if(feature.properties.data.status === 'warning'){
                 return L.marker(latlng, {icon: yellowIcon}).on('click', onMarkerClick);
             }else if(feature.properties.data.status === 'error'){
@@ -196,7 +198,7 @@ function createPopup(feature){
     var cName = 'blue';
     // Fargebung unterscheidet sich je nach inhalt des Properties
     if(feature.properties.data.status === 'offline'){
-        cName = 'blue';
+        cName = 'grey';
     }else if(feature.properties.data.status === 'warning'){
         cName = 'yellow';
     }else if(feature.properties.data.status === 'error'){
@@ -213,4 +215,15 @@ function createPopup(feature){
         + '<h4>'+ feature.properties.data.status + '</h4>'
     );
     return popup;
+}
+
+// wechselt die Farbe des Cluster abhaengig von den zugehoerigen Markern
+function changeClusterColor(cluster) {
+    childs = cluster.getAllChildMarkers();
+    for(i=0; i < childs.length; i++){
+        if( childs[i].className === 'red'){
+            cluster.className = childs[i].className;
+        }
+    }
+    markers.refreshClusters();
 }

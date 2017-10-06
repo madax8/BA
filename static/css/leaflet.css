@@ -172,7 +172,14 @@ a:hover {
   background: #26AD23;
     opacity: 0.9;
 }
-
+.grey .leaflet-popup-content-wrapper{
+  background: #737373;
+  opacity: 0.9;
+}
+.grey .leaflet-popup-tip{
+  background: #737373;
+    opacity: 0.9;
+}
 .leaflet-popup-content h3 {
   /*background: #0004ff;*/
   color: white;
@@ -228,4 +235,14 @@ a:hover {
 
 .marker-cluster div {
     background: #1D77C8;
+}
+
+.green .marker-cluster{
+  background: #26AD23;
+}
+.red .marker-cluster{
+  background: #CA2639;
+}
+.yellow .marker-cluster{
+  background: #CAC424;
 }
