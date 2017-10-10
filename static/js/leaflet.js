@@ -106,16 +106,19 @@ var yellowIcon = new L.Icon({
 var markers = L.markerClusterGroup({
     maxClusterRadius: 30,
     spiderfyOnMaxZoom: true,
+    // erstellt das clusterhtml abhängig von den darunterliegenden Markern
     iconCreateFunction: function (cluster) {
         var childs = cluster.getAllChildMarkers();
-        var foundred = 0, foundgrey = 0;
+        var foundred = 0, foundgrey = 0, foundyellow = 0;
         for(i=0; i < childs.length; i++) {
-            if (childs[i].feature.properties.data.status === 'offline') {
+            if (childs[i].feature.properties.data.status === 'offline')
                 foundgrey += 1;
-            }else if(childs[i].feature.properties.data.status === 'error')
+            if(childs[i].feature.properties.data.status === 'error')
                 foundred += 1;
+            if(childs[i].feature.properties.data.status === 'warning')
+                foundyellow += 1;
         }
-        if(foundgrey >= 1)
+        if((foundgrey >= 1 && childs.length < 30) || foundgrey >= 3)
             return L.divIcon({
                 html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
                 className: "marker-cluster grey",
@@ -125,6 +128,12 @@ var markers = L.markerClusterGroup({
             return L.divIcon({
                 html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
                 className: "marker-cluster red",
+                iconSize: new L.Point(40, 40)
+            });
+        else if(foundyellow >= (childs.length / 2))
+            return L.divIcon({
+                html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
+                className: "marker-cluster yellow",
                 iconSize: new L.Point(40, 40)
             });
         else
@@ -143,13 +152,13 @@ $(document).ajaxStop(function (){
         pointToLayer: function (feature, latlng) {
             //Frontend Datenmanipulation für Demonstrationszwecke
             i++;
-            if( i % 2)
+            if( i % 2 == 0)
                 feature.properties.data.status = 'ok';
-            else if ( i % 3)
+            else if ( i % 5 == 0)
                 feature.properties.data.status = 'warning';
-            else if ( i % 5)
+            else if ( i % 7 == 0)
                 feature.properties.data.status = 'error';
-            else
+            else if (i % 13 == 0)
                 feature.properties.data.status = 'offline';
             if(feature.properties.data.status === 'offline'){
                 return L.marker(latlng, {icon: greyIcon}).on('click', onMarkerClick);
