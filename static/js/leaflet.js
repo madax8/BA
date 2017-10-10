@@ -107,26 +107,32 @@ var markers = L.markerClusterGroup({
     maxClusterRadius: 30,
     spiderfyOnMaxZoom: true,
     iconCreateFunction: function (cluster) {
-        childs = cluster.getAllChildMarkers();
+        var childs = cluster.getAllChildMarkers();
+        var foundred = 0, foundgrey = 0;
         for(i=0; i < childs.length; i++) {
             if (childs[i].feature.properties.data.status === 'offline') {
-                return L.divIcon({
-                    html: '<div class="marker-cluster grey">' + cluster.getChildCount() + '</div>',
-                    className: "marker-cluster grey",
-                    iconSize: new L.Point(40, 40)
-                });
+                foundgrey += 1;
             }else if(childs[i].feature.properties.data.status === 'error')
-                return L.divIcon({
-                    html: '<div class="marker-cluster red">' + cluster.getChildCount() + '</div>',
-                    className: "marker-cluster red",
-                    iconSize: new L.Point(40, 40)
-                });
+                foundred += 1;
         }
-        return L.divIcon({
-            html: '<div class="marker-cluster green">' + cluster.getChildCount() + '</div>',
-            className: "marker-cluster green",
-            iconSize: new L.Point(40, 40)
-        });
+        if(foundgrey >= 1)
+            return L.divIcon({
+                html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
+                className: "marker-cluster grey",
+                iconSize: new L.Point(40, 40)
+            });
+        else if(foundred >= 1)
+            return L.divIcon({
+                html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
+                className: "marker-cluster red",
+                iconSize: new L.Point(40, 40)
+            });
+        else
+            return L.divIcon({
+                html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
+                className: "marker-cluster green",
+                iconSize: new L.Point(40, 40)
+            });
     }
 });
 

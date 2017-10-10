@@ -231,16 +231,11 @@ a:hover {
 .marker-cluster {
     color: white;
     text-align: center;
-    font-size: 18px;
 }
 
 .marker-cluster div {
     background: #257ECA;
-    text-align: center;
-    text-vertical-align: bottom;
-    font-size: 18px;
-    margin-left: 5px;
-	margin-top: 5px;
+    font-size: 16px;
 }
 
 .green .marker-cluster{
