@@ -67,6 +67,15 @@ wird ein Marker erstellt und dann zu einem Layer hinzugefügt. Dieser Layer wird
 ```javascript
     map.addLayer(markers);
 ```
+Die Marker werden als Cluster angelegt und dadurch, abhängig von der Zoomstufe, bei überlappung geclustert. Innerhalb der IconCreateFunction werden die Cluster entsprechend den beinhalteten Markern eingefärbt.
+```javascript
+var markers = L.markerClusterGroup({
+    maxClusterRadius: 30,
+    spiderfyOnMaxZoom: true,
+    iconCreateFunction: function (cluster) {...}
+});
+```
+
 Ein Zusätzlicher Eventhandler für den Click auf einen Marker, der weitere Funktionalität neben dem öffnen des Popups hinzufügt. Zum geklickten Marker auf der Karte wird das entsprechende Listenelement aktiv gesetzt, was eine optische hervorhebung zu folge hat, und die Liste so gescrollt, das dieses Element zu sehen ist.
 ```javascript
     function onMarkerClick(e){
