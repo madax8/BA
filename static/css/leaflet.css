@@ -229,20 +229,33 @@ a:hover {
 }
 
 .marker-cluster {
-    background: #3d90db;
     color: white;
+    text-align: center;
+    font-size: 18px;
 }
 
 .marker-cluster div {
-    background: #1D77C8;
+    background: #257ECA;
+    text-align: center;
+    text-vertical-align: bottom;
+    font-size: 18px;
+    margin-left: 5px;
+	margin-top: 5px;
 }
 
 .green .marker-cluster{
   background: #26AD23;
 }
+
 .red .marker-cluster{
   background: #CA2639;
 }
+.grey .marker-cluster{
+    background: #737373;
+}
+/*.red .marker-cluster div {*/
+    /*background: #c64554;*/
+/*}*/
 .yellow .marker-cluster{
   background: #CAC424;
 }

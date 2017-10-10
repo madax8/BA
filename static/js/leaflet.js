@@ -105,7 +105,29 @@ var yellowIcon = new L.Icon({
 // legt die Einstellungen für das Clusterverhalten fest
 var markers = L.markerClusterGroup({
     maxClusterRadius: 30,
-    spiderfyOnMaxZoom: true
+    spiderfyOnMaxZoom: true,
+    iconCreateFunction: function (cluster) {
+        childs = cluster.getAllChildMarkers();
+        for(i=0; i < childs.length; i++) {
+            if (childs[i].feature.properties.data.status === 'offline') {
+                return L.divIcon({
+                    html: '<div class="marker-cluster grey">' + cluster.getChildCount() + '</div>',
+                    className: "marker-cluster grey",
+                    iconSize: new L.Point(40, 40)
+                });
+            }else if(childs[i].feature.properties.data.status === 'error')
+                return L.divIcon({
+                    html: '<div class="marker-cluster red">' + cluster.getChildCount() + '</div>',
+                    className: "marker-cluster red",
+                    iconSize: new L.Point(40, 40)
+                });
+        }
+        return L.divIcon({
+            html: '<div class="marker-cluster green">' + cluster.getChildCount() + '</div>',
+            className: "marker-cluster green",
+            iconSize: new L.Point(40, 40)
+        });
+    }
 });
 
 // Erstelle Marker und Popups aus der Geojsonsource und fügt sie der Karte hinzu
@@ -142,6 +164,7 @@ $(document).ajaxStop(function (){
     markers.addLayer(geoJsonLayer);
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
+    // changeClusterColor(markers);
 });
 
 
@@ -215,15 +238,4 @@ function createPopup(feature){
         + '<h4>'+ feature.properties.data.status + '</h4>'
     );
     return popup;
-}
-
-// wechselt die Farbe des Cluster abhaengig von den zugehoerigen Markern
-function changeClusterColor(cluster) {
-    childs = cluster.getAllChildMarkers();
-    for(i=0; i < childs.length; i++){
-        if( childs[i].className === 'red'){
-            cluster.className = childs[i].className;
-        }
-    }
-    markers.refreshClusters();
 }
