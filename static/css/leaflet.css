@@ -1,45 +1,45 @@
 body {
-  color: #404040;
-  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
+    color: #404040;
+    font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
 h1 {
-  font-size: 22px;
-  margin: 0;
-  font-weight: 400;
-  line-height: 20px;
-  padding: 20px 2px;
+    font-size: 22px;
+    margin: 0;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 20px 2px;
 }
 
 a {
-  color: #404040;
-  text-decoration: none;
+    color: #404040;
+    text-decoration: none;
 }
 
 a:hover {
-  color: #101010;
+    color: #101010;
 }
 
 .sidebar {
-  position: absolute;
-  background: #fafafa;
-  width: 33.33%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  border-right: 1px solid #000;
-  z-index: 1001;
+    position: absolute;
+    background: #fafafa;
+    width: 30%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    border-right: 1px solid #000;
+    z-index: 1001;
 }
 
 .topbar{
@@ -50,42 +50,42 @@ a:hover {
 }
 
 .map {
-  position: absolute;
-  left: 33.33%;
-  width: 66.66%;
-  top: 0;
-  bottom: 0;
+    position: absolute;
+    left: 30%;
+    width: 70%;
+    top: 0;
+    bottom: 0;
 }
 
 .heading {
-  background: #257ECA;
-  border: 2px solid #257ECA;
-  height: 8vh;
-  color: #fff;
-  padding-left: 10px;
-  border-bottom: 1px solid black;
+    background: #257ECA;
+    border: 2px solid #257ECA;
+    height: 8vh;
+    color: #fff;
+    padding-left: 10px;
+    border-bottom: 1px solid black;
 }
 
 .listings {
-  max-height: 76vh;
-  overflow-y: auto;
-  border-bottom: 1px solid #000;
+    max-height: 76vh;
+    overflow-y: auto;
+    border-bottom: 1px solid #000;
 }
 
 .listings .item {
-  display: block;
-  border-bottom: 1px solid #000;
-  border-right: 1px solid #000;
-  padding: 10px;
-  text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    padding: 10px;
+    text-decoration: none;
 }
 
 .listings .item:last-child { border-bottom: none; }
 
 .listings .item .title {
-  display: block;
-  color: #1D77C8;
-  font-weight: 700;
+    display: block;
+    color: #1D77C8;
+    font-weight: 700;
 }
 
 .listings .item .title small { font-weight: 400; }
@@ -94,41 +94,41 @@ a:hover {
 .listings .item .title:hover { color: #3d90db; }
 
 .listings .item.active {
-  background-color: #257ECA;
-  color: white;
+    background-color: #257ECA;
+    color: white;
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 3px;
-  border-left: 0;
-  background: rgba(0, 0, 0, 0.1);
+    width: 4px;
+    height: 3px;
+    border-left: 0;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 ::-webkit-scrollbar-track {
-  background: none;
+    background: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
-  border-radius: 0;
+    background: #000000;
+    border-radius: 0;
 }
 
 .clearfix { display: block; }
 
 .clearfix::after {
-  content: '.';
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 .leaflet-popup-content {
-  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-  padding: 0;
-  width: 250px;
-  color: white;
+    font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+    padding: 0;
+    width: 250px;
+    color: white;
 }
 
 
@@ -138,95 +138,95 @@ a:hover {
 
 
 .leaflet-popup-content-wrapper{
-  padding: 1%;
-  background: grey;
+    padding: 1%;
+    background: grey;
     /*color: white;*/
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 .red .leaflet-popup-content-wrapper{
     background: #CA2639;
   }
 .red .leaflet-popup-tip{
-  background: #CA2639;
+    background: #CA2639;
     opacity: 0.9;
 }
 .blue .leaflet-popup-content-wrapper{
     background: #257ECA;
   }
 .blue .leaflet-popup-tip{
-  background: #257ECA;
+    background: #257ECA;
     opacity: 0.9;
 }
 .yellow .leaflet-popup-content-wrapper{
     background: #CAC424;
   }
 .yellow .leaflet-popup-tip{
-  background: #CAC424;
+    background: #CAC424;
     opacity: 0.9;
 }
 .green .leaflet-popup-content-wrapper{
     background: #26AD23;
 }
 .green .leaflet-popup-tip{
-  background: #26AD23;
+    background: #26AD23;
     opacity: 0.9;
 }
 .grey .leaflet-popup-content-wrapper{
-  background: #737373;
-  opacity: 0.9;
+    background: #737373;
+    opacity: 0.9;
 }
 .grey .leaflet-popup-tip{
-  background: #737373;
+    background: #737373;
     opacity: 0.9;
 }
 .leaflet-popup-content h3 {
-  /*background: #0004ff;*/
-  color: white;
-  margin: 0;
-  display: block;
-  padding: 10px;
-  border-radius: 5px 5px 0 0;
-  font-weight: 800;
-  margin-top: -15px;
+    /*background: #0004ff;*/
+    color: white;
+    margin: 0;
+    display: block;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    font-weight: 800;
+    margin-top: -15px;
 }
 
 .leaflet-popup-content h4 {
-  margin: -5px;
-  display: block;
-  padding: 10px;
-  font-weight: 400;
-  color: white;
+    margin: -5px;
+    display: block;
+    padding: 10px;
+    font-weight: 400;
+    color: white;
 }
 
 .leaflet-popup-content div {
-  padding: 10px;
+    padding: 10px;
 }
 
 .leaflet-container .leaflet-marker-icon {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .leaflet-popup-anchor-top > .leaflet-popup-content {
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 .leaflet-popup-anchor-top > .leaflet-popup-tip {
-  border-bottom-color: #fff;
+    border-bottom-color: #fff;
 }
 
 
-#switch {
-    right: 0%;
-    bottom:0%;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    font-family: 'Open Sans', sans-serif;
-    z-index: 1;
-    border-top-left-radius: 3px;
-    color: #000;
-}
+/*#switch {*/
+    /*right: 0%;*/
+    /*bottom:0%;*/
+    /*position: absolute;*/
+    /*background: rgba(255, 255, 255, 0.8);*/
+    /*padding: 10px;*/
+    /*font-family: 'Open Sans', sans-serif;*/
+    /*z-index: 1;*/
+    /*border-top-left-radius: 3px;*/
+    /*color: #000;*/
+/*}*/
 
 .marker-cluster {
     color: white;
@@ -239,22 +239,22 @@ a:hover {
 }
 
 .green .marker-cluster{
-  background: #26AD23;
-  border: solid 1px #39ff35;
+    background: #26AD23;
+    border: solid 1px #39ff35;
 }
 
 .red .marker-cluster{
-  background: #CA2639;
-  border: solid 1px #ff3048;
+    background: #CA2639;
+    border: solid 1px #ff3048;
 }
 .grey .marker-cluster{
     background: #737373;
-  border: solid 1px #b7b7b7;
+    border: solid 1px #b7b7b7;
 }
 /*.red .marker-cluster div {*/
     /*background: #c64554;*/
 /*}*/
 .yellow .marker-cluster{
-  background: #CAC424;
-  border: solid 1px #fff732;
+    background: #CAC424;
+    border: solid 1px #fff732;
 }

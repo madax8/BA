@@ -95,6 +95,19 @@ class geoj(db.Model):
         self.name = name
         self.jsondata = jsondata
 
+# Muss noch angepasst werden
+# class mapAddress(db.Model):
+#
+#     __tablename__ = "mapAddress"
+#
+#     id = db.Column(db.Integer, primary_key=True)
+#     address = db.Column(db.String, unique=True)
+#     coordinates = db.Column(db.String)
+#
+#     def __init__(self, address, coordinates):
+#         self.address = address
+#         self.coordinates = coordinates
+#
 
 db.create_all()
 
