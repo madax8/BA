@@ -240,17 +240,21 @@ a:hover {
 
 .green .marker-cluster{
   background: #26AD23;
+  border: solid 1px #39ff35;
 }
 
 .red .marker-cluster{
   background: #CA2639;
+  border: solid 1px #ff3048;
 }
 .grey .marker-cluster{
     background: #737373;
+  border: solid 1px #b7b7b7;
 }
 /*.red .marker-cluster div {*/
     /*background: #c64554;*/
 /*}*/
 .yellow .marker-cluster{
   background: #CAC424;
+  border: solid 1px #fff732;
 }
