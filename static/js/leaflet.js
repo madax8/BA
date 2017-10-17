@@ -245,6 +245,7 @@ function createPopup(feature){
         cName = 'green';
     }
     var popup = L.popup({className: cName});
+    var popup2 = L.popup({className: cName});
     popup.setContent(
         '<h3>' + feature.properties.osm.class + '</h3>'
         + '<h4>' + feature.properties.osm.type + '</h4>'
@@ -253,4 +254,34 @@ function createPopup(feature){
         + '<h4>'+ feature.properties.data.status + '</h4>'
     );
     return popup;
+}
+
+// versucht möglichst Effizient die übergebene Zeit zu verbrauchen.
+function zeitSchinden(zeit){
+    var gesZeit = zeit;
+    var imgur = 15, lesen = 10, traeumen = 8, musik = 4, arbeiten = 30;
+    var countA = 0, countL = 0, countI = 0, countT = 0, countM = 0;
+
+    while(zeit >= musik){
+        if(zeit >= arbeiten){
+            zeit = zeit - arbeiten;
+            countA += 1;
+        }else if(zeit >= imgur){
+            zeit = zeit - imgur;
+            countI += 1;
+        }else if(zeit >= lesen){
+            zeit = zeit - lesen;
+            countL++;
+        }else if(zeit >= traeumen){
+            zeit = zeit - traeumen;
+            countT++;
+        }else{
+            zeit = zeit - musik;
+            countM++;
+        }
+    }
+    alert("Deine " + gesZeit + " Stunden wurden folgendermaßen aufgeteilt: "
+        + countA + "x Arbeiten, " + countI + "x auf Imgur gammeln, "
+        + countL + "x Fachartikel lesen, " + countT + "x sich Tagträumen hingeben, "
+        + countM + "x Musik hören und noch " + zeit + " Minuten zum sandeln.")
 }
