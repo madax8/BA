@@ -95,6 +95,7 @@ class geoj(db.Model):
         self.name = name
         self.jsondata = jsondata
 
+
 # Muss noch angepasst werden
 # class mapAddress(db.Model):
 #
@@ -102,14 +103,14 @@ class geoj(db.Model):
 #
 #     id = db.Column(db.Integer, primary_key=True)
 #     address = db.Column(db.String, unique=True)
-#     coordinates = db.Column(db.String)
+#     coordinates = db.Column(db.point)
 #
 #     def __init__(self, address, coordinates):
 #         self.address = address
 #         self.coordinates = coordinates
 #
-
-db.create_all()
+#
+# db.create_all()
 
 
 # home site
@@ -344,3 +345,17 @@ def geojson_detail(name):
     return render_template('geojson_detail.html', geoj=g)
 
 
+def lookup_coords(addr):
+    m = mapAddress.query.filter_by(address=addr).first()
+    if m:
+        return m.coordinates
+    else:
+        n = do_geocode(addr)
+
+        return n.lat, n.lon
+
+
+def new_coords(addr, coords):
+    save = mapAddress(addr, coords)
+    db.session.add
+    db.session.commit
