@@ -236,6 +236,7 @@ a:hover {
 .marker-cluster div {
     background: #257ECA;
     font-size: 16px;
+    border: solid 1px #309fff;
 }
 
 .green .marker-cluster{
