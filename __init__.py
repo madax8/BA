@@ -97,20 +97,22 @@ class geoj(db.Model):
 
 
 # Muss noch angepasst werden
-# class mapAddress(db.Model):
-#
-#     __tablename__ = "mapAddress"
-#
-#     id = db.Column(db.Integer, primary_key=True)
-#     address = db.Column(db.String, unique=True)
-#     coordinates = db.Column(db.point)
-#
-#     def __init__(self, address, coordinates):
-#         self.address = address
-#         self.coordinates = coordinates
-#
-#
-# db.create_all()
+class mapAddress(db.Model):
+
+    __tablename__ = "mapAddress"
+
+    id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String, unique=True)
+    lat = db.Column(db.Integer)
+    lon = db.Column(db.Integer)
+
+    def __init__(self, address, lat, lon):
+        self.address = address
+        self.lat = lat
+        self.lon = lon
+
+
+db.create_all()
 
 
 # home site
@@ -355,7 +357,7 @@ def lookup_coords(addr):
         return n.lat, n.lon
 
 
-def new_coords(addr, coords):
-    save = mapAddress(addr, coords)
+def new_coords(addr, lat, lon):
+    save = mapAddress(addr, lat, lon)
     db.session.add
     db.session.commit
