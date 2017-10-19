@@ -359,5 +359,5 @@ def lookup_coords(addr):
 
 def new_coords(addr, lat, lon):
     save = mapAddress(addr, lat, lon)
-    db.session.add
-    db.session.commit
+    db.session.add(save)
+    db.session.commit()
