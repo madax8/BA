@@ -118,7 +118,7 @@ var markers = L.markerClusterGroup({
             if(childs[i].feature.properties.data.status === 'warning')
                 foundyellow += 1;
         }
-        if((foundgrey >= 1 && childs.length < 30) || foundgrey >= 3)
+        if((foundgrey >= 1 && childs.length < 30 && foundred < 1) || (foundgrey >= 3 && foundred < 2))
             return L.divIcon({
                 html: '<div class="marker-cluster">' + '<span>' + cluster.getChildCount() + '</span>' + '</div>',
                 className: "marker-cluster grey",
@@ -160,6 +160,7 @@ $(document).ajaxStop(function (){
                 feature.properties.data.status = 'error';
             else if (i % 13 === 0)
                 feature.properties.data.status = 'offline';
+            //Status bestimmt die Iconfarbe
             if(feature.properties.data.status === 'offline'){
                 return L.marker(latlng, {icon: greyIcon}).on('click', onMarkerClick);
             }else if(feature.properties.data.status === 'warning'){
@@ -179,56 +180,53 @@ $(document).ajaxStop(function (){
     markers.addLayer(geoJsonLayer);
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
-    // changeClusterColor(markers);
 });
 
 
 // erstellen der Modemliste
 function buildLocationList(data) {
-    // Iterate through the list of stores
+    // Iteriert durch die Modemliste
     for (i = 0; i < data.features.length; i++) {
         var currentFeature = data.features[i];
-        // Shorten data.feature.properties to just `prop` so we're not
-        // writing this long form over and over again.
+        // für einen kürzeren Namen
         var prop = currentFeature.properties;
-        // Select the listing container in the HTML and append a div
-        // with the class 'item' for each modem
+        // Wähle den Container in HTML aus und hänge ein div von der Klasse 'item' an
         var listings = document.getElementById('listings');
         var listing = listings.appendChild(document.createElement('div'));
         listing.className = 'item';
         listing.id = 'listing-' + i;
 
-        // Create a new link with the class 'title' for each store
-        // and fill it with the store address
+        // erstelle einen Link von der Klasse 'title' für jedes Modem
+        // und befülle in mit dem Bezeichner
         var link = listing.appendChild(document.createElement('a'));
         link.href = '#';
         link.className = 'title';
         link.dataPosition = i;
         link.innerHTML = prop.osm.class;
 
-        // Add an event listener for the links in the sidebar listing
+        // Click Event des Links
         link.addEventListener('click', function(e) {
-            // Update the currentFeature to the modem associated with the clicked link
+            // Aktualisiere das currentFeature auf das Modem,das mit dem Link zusammenhängt
             var clickedListing = data.features[this.dataPosition];
-            // 1. Fly to the point associated with the clicked link
+            // 1. Zentriere die Karte auf das entsprechende Modem
             map.setView(new L.LatLng(clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]), 18);
+            // 2. Erstelle ein Popup an der Modemposition
             var popup = createPopup(clickedListing);
             popup.setLatLng([clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]]);
             popup.openOn(map);
-            // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+            // 3. Hebe das Listenelement in der Sidebar hervor (entferne bestehende Hervorhebungen)
             var activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {
                 activeItem[0].classList.remove('active');
             }
             this.parentNode.classList.add('active');
         });
-        // Create a new div with the class 'details' for each modem
-        // and fill it with the properties you want
+        // Erstelle ein neues div von der Klasse 'details' für jedes Modem
+        // und befülle es mit den wichtigen Properties
         var details = listing.appendChild(document.createElement('div'));
         details.innerHTML = prop.osm.display_name;
         details.innerHTML += '<br>' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];
     }
-    // flyToAddress(data.features[0]);
 }
 
 // erstellen eines Popup mit entsprechender Einfärbung und Inhalt
@@ -254,3 +252,6 @@ function createPopup(feature){
     );
     return popup;
 }
+
+
+
