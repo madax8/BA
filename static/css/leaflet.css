@@ -12,7 +12,6 @@ body {
     box-sizing: border-box;
 }
 
-
 h1 {
     font-size: 22px;
     margin: 0;
@@ -131,7 +130,6 @@ a:hover {
     color: white;
 }
 
-
 .leaflet-popup-close-button {
     display: none;
 }
@@ -214,19 +212,6 @@ a:hover {
 .leaflet-popup-anchor-top > .leaflet-popup-tip {
     border-bottom-color: #fff;
 }
-
-
-/*#switch {*/
-    /*right: 0%;*/
-    /*bottom:0%;*/
-    /*position: absolute;*/
-    /*background: rgba(255, 255, 255, 0.8);*/
-    /*padding: 10px;*/
-    /*font-family: 'Open Sans', sans-serif;*/
-    /*z-index: 1;*/
-    /*border-top-left-radius: 3px;*/
-    /*color: #000;*/
-/*}*/
 
 .marker-cluster {
     color: white;
