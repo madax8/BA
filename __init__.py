@@ -191,7 +191,7 @@ def save_json(name, geojson):
     save = geoj(name, geojson)
     db.session.add(save)
     db.session.commit()
-    flash('Json was successfully saved')
+    # flash('Json was successfully saved')
 
 
 # render the geojson-view
@@ -211,43 +211,34 @@ def show_leaflet():
 def create_geojson(name):
     arr = []
     # spaeter in schleife verpacken ... Daten sollten dann von Datenbank kommen
-    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 17")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 13")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 42")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 26")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 25")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 16")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 27")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Bayerstraße 2")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 30")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 29")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 36")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 19")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 10")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 12")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 19")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 1")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 5")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Sedanstraße 10")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 7")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Nörreut 20")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")).raw)
-    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 52")).raw)
-    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 37")).raw)
-    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 48")).raw)
-    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")).raw)
-    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")).raw)
+    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 17")))
+    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 13")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 42")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 26")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 25")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 16")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 27")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Bayerstraße 2")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 30")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 29")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 36")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 19")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 10")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 12")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 19")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 1")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 5")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 10")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 7")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")))
+    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 52")))
+    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 37")))
+    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 48")))
+    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")))
+    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")))
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Johannesweg 3")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Am Bach 2")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83026 Dorfstraße 5")).raw)
@@ -295,7 +286,7 @@ def create_geojson(name):
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 1"))
+    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Am Innreit 2"))
     # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 2"))
     # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 3"))
     # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 4"))
@@ -309,7 +300,7 @@ def create_geojson(name):
     # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 12"))
     # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 13"))
     print(arr)
-
+    return True
     # save_json(name, convert_json(arr))
     #
     # with open('static/' + name + '.geojson', 'w') as f:
@@ -365,11 +356,12 @@ def geojson_detail(name):
     return render_template('geojson_detail.html', geoj=g)
 
 
-# muesste eigentlich funktionieren, allerdings haengt sich der Browser dabei auf
+# funktioniert, ist aber unfassbar lahmarschig
+@app.route('/lookup/<addr>')
 def lookup_coords(addr):
     m = mapAddress.query.filter_by(address=addr).first()
     if m:
-        return m.lat, m.lon
+        return m.lat
     else:
         n = do_geocode(addr).raw
         for key, value in n.items():
@@ -379,10 +371,10 @@ def lookup_coords(addr):
                 lon = value
 
         new_coords(addr, lat, lon)
+        return (lat, lon)
 
-        return lat, lon
 
-
+# abspeichern neuer Geokodierungsdaten
 def new_coords(addr, lat, lon):
     save = mapAddress(addr, lat, lon)
     db.session.add(save)
