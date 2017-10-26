@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <meta charset="UTF-8">
+    <title>Geokodierung</title>
+</head>
+<body>
+    <h1>Geokodierungstabelle</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Adresse</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for geocode in geocodes %}
+                <tr>
+                    <td>{{ geocode.address }}</td>
+                    <td>{{ geocode.lat }}</td>
+                    <td>{{ geocode.lon }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

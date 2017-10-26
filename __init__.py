@@ -103,8 +103,8 @@ class mapAddress(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String, unique=True)
-    lat = db.Column(db.Integer)
-    lon = db.Column(db.Integer)
+    lat = db.Column(db.Float)
+    lon = db.Column(db.Float)
 
     def __init__(self, address, lat, lon):
         self.address = address
@@ -136,6 +136,11 @@ def show_map_dynamic(name):
 @app.route('/all')
 def show_all():
     return render_template('show_all.html', modems=modems.query.all())
+
+
+@app.route('/geocode')
+def geocode():
+    return render_template('geocode.html', geocodes=mapAddress.query.all())
 
 
 # Adressview anzeigen
@@ -206,11 +211,11 @@ def show_leaflet():
 def create_geojson(name):
     arr = []
     # spaeter in schleife verpacken ... Daten sollten dann von Datenbank kommen
-    arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 17")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 13")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 42")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 26")).raw)
-    arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 25")).raw)
+    # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Innstraße 17")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 13")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 42")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 26")).raw)
+    # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Innstraße 25")).raw)
     # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
     # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
     # arr.append((do_geocode("Germany Bavaria Rosenheim 83022 Am Innreit 2")).raw)
@@ -290,18 +295,31 @@ def create_geojson(name):
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
     # arr.append((do_geocode("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")).raw)
+    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 1"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 2"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 3"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 4"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 5"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 6"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 7"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 8"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 9"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 10"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 11"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 12"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 13"))
     print(arr)
 
-    save_json(name, convert_json(arr))
-
-    with open('static/' + name + '.geojson', 'w') as f:
-        f.write(convert_json(arr))
-        # json.dump(convert_json(location.raw), f)
-    return app.send_static_file(name + '.geojson')
+    # save_json(name, convert_json(arr))
+    #
+    # with open('static/' + name + '.geojson', 'w') as f:
+    #     f.write(convert_json(arr))
+    #     # json.dump(convert_json(location.raw), f)
+    # return app.send_static_file(name + '.geojson')
 
 
 # converts an array of nominatim raw data in a valid Geojson
-# maybe I can call the data-mapping method here
+# muss nochmal mit den richtigen Daten gemacht werden
 def convert_json(ar):
     j = {"type": "FeatureCollection",
          "features": [
@@ -347,17 +365,26 @@ def geojson_detail(name):
     return render_template('geojson_detail.html', geoj=g)
 
 
+# muesste eigentlich funktionieren, allerdings haengt sich der Browser dabei auf
 def lookup_coords(addr):
     m = mapAddress.query.filter_by(address=addr).first()
     if m:
-        return m.coordinates
+        return m.lat, m.lon
     else:
-        n = do_geocode(addr)
+        n = do_geocode(addr).raw
+        for key, value in n.items():
+            if key == 'lat':
+                lat = value
+            if key == 'lon':
+                lon = value
 
-        return n.lat, n.lon
+        new_coords(addr, lat, lon)
+
+        return lat, lon
 
 
 def new_coords(addr, lat, lon):
     save = mapAddress(addr, lat, lon)
     db.session.add(save)
     db.session.commit()
+
