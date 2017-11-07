@@ -104,7 +104,7 @@ var yellowIcon = new L.Icon({
 
 // legt die Einstellungen für das Clusterverhalten fest
 var markers = L.markerClusterGroup({
-    maxClusterRadius: 30,
+    maxClusterRadius: 40,
     spiderfyOnMaxZoom: true,
     // erstellt das clusterhtml abhängig von den darunterliegenden Markern
     iconCreateFunction: function (cluster) {
@@ -245,10 +245,10 @@ function createPopup(feature){
     var popup = L.popup({className: cName});
     popup.setContent(
         '<h3>' + feature.properties.osm.class + '</h3>'
-        + '<h4>' + feature.properties.osm.type + '</h4>'
-        + '<h4>' + feature.geometry.coordinates[0] + '</h4>'
-        + '<h4>' + feature.geometry.coordinates[1] + '</h4>'
-        + '<h4>'+ feature.properties.data.status + '</h4>'
+        + '<h4>Type: ' + feature.properties.osm.type + '</h4>'
+        + '<h4>Lon: ' + feature.geometry.coordinates[0] + '</h4>'
+        + '<h4>Lat: ' + feature.geometry.coordinates[1] + '</h4>'
+        + '<h4>Status: '+ feature.properties.data.status + '</h4>'
     );
     return popup;
 }
