@@ -232,7 +232,7 @@ function buildLocationList(data) {
 // erstellen eines Popup mit entsprechender Einfärbung und Inhalt
 function createPopup(feature){
     var cName = 'blue';
-    // Fargebung unterscheidet sich je nach inhalt des Properties
+    // Fargebung unterscheidet sich je nach Inhalt des Properties
     if(feature.properties.data.status === 'offline'){
         cName = 'grey';
     }else if(feature.properties.data.status === 'warning'){
