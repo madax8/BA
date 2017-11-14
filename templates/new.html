@@ -2,6 +2,7 @@
 <html>
        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
    <body>
 
       <h3>Modems - Anlegen</h3>
@@ -12,18 +13,20 @@
             {{ message }}
          </div>
       {%- endfor %}
+      <div class="col-md-12">
+         <form action = "{{ request.path }}" method = "post">
+            <label for = "modelname">Modelname</label><br>
+            <input type = "text" name = "modelname" placeholder = "Modelname" /><br>
+            <label for = "mac">MAC</label><br>
+            <input type = "text" name = "mac" placeholder = "mac" /><br>
+            <label for = "wert">Wert</label><br>
+            <input type = "text" name = "wert" placeholder = "wert" /><br>
+            <label for = "status">Status</label><br>
+            <input type = "text" name = "status" placeholder = "status" /><br>
+            <input type = "submit" value = "Submit" />
+         </form>
+      </div>
 
-      <form action = "{{ request.path }}" method = "post">
-         <label for = "modelname">Modelname</label><br>
-         <input type = "text" name = "modelname" placeholder = "Modelname" /><br>
-         <label for = "mac">MAC</label><br>
-         <input type = "text" name = "mac" placeholder = "mac" /><br>
-         <label for = "wert">Wert</label><br>
-         <input type = "text" name = "wert" placeholder = "wert" /><br>
-         <label for = "status">Status</label><br>
-         <input type = "text" name = "status" placeholder = "status" /><br>
-         <input type = "submit" value = "Submit" />
-      </form>
 
    </body>
 </html>
