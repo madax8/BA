@@ -69,15 +69,13 @@ class modems(db.Model):
     mac = db.Column(db.String(20), unique=True)
     modelname = db.Column(db.String(80), unique=False)
     wert = db.Column(db.String(120), unique=False)
-    coord1 = db.Column(db.String(20), unique=False)
-    coord2 = db.Column(db.String(20), unique=False)
+    status = db.Column(db.String(20), unique=False)
 
-    def __init__(self, modelname, mac, wert, coord1, coord2):
+    def __init__(self, modelname, mac, wert, status):
         self.modelname = modelname
         self.mac = mac
         self.wert = wert
-        self.coord1 = coord1
-        self.coord2 = coord2
+        self.status = status
 
     def __repr__(self):
         return '<Modem %r>' % self.modelname
@@ -153,11 +151,11 @@ def show_address():
 @app.route('/new', methods=['GET', 'POST'])
 def new():
     if request.method == 'POST':
-        if not request.form['modelname'] or not request.form['wert'] or not request.form['coord1']:
+        if not request.form['modelname'] or not request.form['wert'] or not request.form['status']:
             flash('Please enter all the fields', 'error')
         else:
             modem = modems(request.form['modelname'], request.form['mac'], request.form['wert'],
-                               request.form['coord1'], request.form['coord2'])
+                               request.form['status'])
 
             db.session.add(modem)
             db.session.commit()
