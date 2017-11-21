@@ -1,4 +1,12 @@
 
-.col-md-6 {
-    border: 3px solid black;
+h1{
+    color: white;
+}
+
+.col-md-12 {
+    background: black;
+}
+
+h3{
+    color: white;
 }

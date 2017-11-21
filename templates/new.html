@@ -3,17 +3,19 @@
        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+           <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
    <body>
 
+   <div class="col-md-12">
       <h3>Modems - Anlegen</h3>
-      <hr/>
+   </div>
 
       {%- for category, message in get_flashed_messages(with_categories = true) %}
          <div class = "alert alert-danger">
             {{ message }}
          </div>
       {%- endfor %}
-      <div class="col-md-12">
+      <div class="col-md-6">
          <form action = "{{ request.path }}" method = "post">
             <label for = "mac">MAC</label><br>
             <input type = "text" name = "mac" placeholder = "mac" /><br>
