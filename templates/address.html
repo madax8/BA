@@ -6,6 +6,7 @@
        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
    </head>
    <body>
+   <div class="col-md-12">
       <h3>
          <a href = "{{ url_for('show_address') }}">Adressübersicht</a>
       </h3>
@@ -13,9 +14,10 @@
       {%- for message in get_flashed_messages() %}
          {{ message }}
       {%- endfor %}
-            <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen
-         </a>)</h3>
-      <table class="table">
+       <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen</a>)</h3>
+   </div>
+
+      <table class="table table-striped">
          <thead>
             <tr>
                <th>Bezeichnung</th>

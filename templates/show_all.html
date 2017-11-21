@@ -6,36 +6,36 @@
        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
    </head>
    <body>
-
-      <h3>
+      <div class="col-md-12">
+         <h3>
          <a href = "{{ url_for('show_all') }}">Modemübersicht</a>
-      </h3>
+         </h3>
 
-      <hr/>
-      {%- for message in get_flashed_messages() %}
-         {{ message }}
-      {%- endfor %}
+         <hr/>
+            {%- for message in get_flashed_messages() %}
+               {{ message }}
+            {%- endfor %}
 
-            <h3>Modems (<a href = "{{ url_for('new') }}">hinzufügen
-         </a>)</h3>
+            <h3>Modems (<a href = "{{ url_for('new') }}">hinzufügen</a>)</h3>
+      </div>
 
-      <table class="table">
+      <table class="table table-striped">
          <thead>
             <tr>
-               <th>Modelname</th>
-                <th>MAC</th>
-               <th>Wert</th>
+               <th>MAC</th>
+               <th>Gerätename</th>
                <th>Status</th>
+               <th>Wert</th>
             </tr>
          </thead>
 
          <tbody>
             {% for modem in modems %}
                <tr>
+                  <td>{{ modem.mac }}</td>
                   <td>{{ modem.modelname }}</td>
-                   <td>{{ modem.mac }}</td>
-                  <td>{{ modem.wert }}</td>
                   <td>{{ modem.status }}</td>
+                  <td>{{ modem.wert }}</td>
                </tr>
             {% endfor %}
          </tbody>
