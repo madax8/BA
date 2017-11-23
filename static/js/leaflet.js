@@ -209,12 +209,14 @@ function buildLocationList(data) {
             // Aktualisiere das currentFeature auf das Modem,das mit dem Link zusammenhängt
             var clickedListing = data.features[this.dataPosition];
             // 1. Zentriere die Karte auf das entsprechende Modem
-            map.setView(new L.LatLng(clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]), 18);
+            map.setView(new L.LatLng(clickedListing.geometry.coordinates[1],
+                                     clickedListing.geometry.coordinates[0]), 18);
             // 2. Erstelle ein Popup an der Modemposition
             var popup = createPopup(clickedListing);
-            popup.setLatLng([clickedListing.geometry.coordinates[1], clickedListing.geometry.coordinates[0]]);
+            popup.setLatLng([clickedListing.geometry.coordinates[1],
+                             clickedListing.geometry.coordinates[0]]);
             popup.openOn(map);
-            // 3. Hebe das Listenelement in der Sidebar hervor (entferne bestehende Hervorhebungen)
+            // 3. Hebe das Listenelement in der Sidebar hervor (entfernt bestehende Hervorhebungen)
             var activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {
                 activeItem[0].classList.remove('active');
@@ -225,7 +227,8 @@ function buildLocationList(data) {
         // und befülle es mit den wichtigen Properties
         var details = listing.appendChild(document.createElement('div'));
         details.innerHTML = prop.osm.display_name;
-        details.innerHTML += '<br>' + currentFeature.geometry.coordinates[0] + ' | ' + currentFeature.geometry.coordinates[1];
+        details.innerHTML += '<br>' + currentFeature.geometry.coordinates[0] + ' | '
+                                    + currentFeature.geometry.coordinates[1];
     }
 }
 
