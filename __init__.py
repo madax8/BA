@@ -354,12 +354,13 @@ def geojson_detail(name):
     return render_template('geojson_detail.html', geoj=g)
 
 
-# funktioniert, ist aber unfassbar lahmarschig
+# schaut zuerst in lokaler Datenbank ob die Koordinaten bereits vorhanden sind
+# wenn nicht wird die geokodierung aufgerufen
 @app.route('/lookup/<addr>')
 def lookup_coords(addr):
     m = mapAddress.query.filter_by(address=addr).first()
     if m:
-        return m.lat
+        return (m.lat, m.lon)
     else:
         n = do_geocode(addr).raw
         for key, value in n.items():
