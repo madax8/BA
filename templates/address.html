@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang = "en">
-   <head>
-           <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-   </head>
-   <body>
-   <div class="col-md-12">
-      <h2>
-         <a href = "{{ url_for('show_address') }}">Adressübersicht</a>
-      </h2>
-      {%- for message in get_flashed_messages() %}
-         {{ message }}
-      {%- endfor %}
-       <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen</a>)
-       <a id="zurück" href="/">zurück zur Übersicht</a></h3>
-       <hr>
-   </div>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    </head>
+    <body>
+    <div class="col-md-12">
+        <h2>
+            <a href = "{{ url_for('show_address') }}">Adressübersicht</a>
+        </h2>
+        {%- for message in get_flashed_messages() %}
+            {{ message }}
+        {%- endfor %}
+        <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen</a>)
+        <a id="zurück" href="/">zurück zur Übersicht</a></h3>
+        <hr>
+    </div>
 
-      <table class="table table-striped">
-         <thead>
-            <tr>
-               <th>Bezeichnung</th>
-               <th>Straße</th>
-               <th>Hausnummer</th>
-                <th>PLZ</th>
-                <th>Stadt</th>
-                <th>MAC</th>
-            </tr>
-         </thead>
-         <tbody>
-            {% for ad in address %}
-               <tr>
-                  <td>{{ ad.name }}</td>
-                  <td>{{ ad.street }}</td>
-                  <td>{{ ad.number }}</td>
-                  <td>{{ ad.plz }}</td>
-                   <td>{{ ad.city }}</td>
-                   <td>{{ ad.mac }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
-   </body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Bezeichnung</th>
+                    <th>Straße</th>
+                    <th>Hausnummer</th>
+                    <th>PLZ</th>
+                    <th>Stadt</th>
+                    <th>MAC</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad in address %}
+                <tr>
+                    <td>{{ ad.name }}</td>
+                    <td>{{ ad.street }}</td>
+                    <td>{{ ad.number }}</td>
+                    <td>{{ ad.plz }}</td>
+                    <td>{{ ad.city }}</td>
+                    <td>{{ ad.mac }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
 </html>

@@ -43,7 +43,7 @@ a:hover {
 
 .topbar{
     height: 14vh;
-    padding: 5px;
+    padding: 3px;
 }
 #zurück {
     padding: 5px;
@@ -67,7 +67,7 @@ a:hover {
 }
 
 .listings {
-    max-height: 76vh;
+    max-height: 78vh;
     overflow-y: auto;
     border-bottom: 1px solid #000;
 }

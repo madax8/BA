@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
-       <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-           <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-   <body>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    </head>
 
-   <div class="col-md-12">
-      <h3>Modems - Anlegen</h3>
-   </div>
+    <body>
 
-      {%- for category, message in get_flashed_messages(with_categories = true) %}
-         <div class = "alert alert-danger">
+    <div class="col-md-12">
+        <h3>Modems - Anlegen</h3>
+    </div>
+
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
+        <div class = "alert alert-danger">
             {{ message }}
-         </div>
-      {%- endfor %}
-      <div class="col-md-6">
-         <form action = "{{ request.path }}" method = "post">
+        </div>
+    {%- endfor %}
+    <div class="col-md-6">
+        <form action = "{{ request.path }}" method = "post">
             <label for = "mac">MAC</label><br>
             <input type = "text" name = "mac" placeholder = "mac" /><br>
             <br>
@@ -30,9 +33,8 @@
             <input type = "text" name = "status" placeholder = "status" /><br>
             <br>
             <input type = "submit" value = "Submit" />
-         </form>
-      </div>
-
-
-   </body>
+        </form>
+    </div>
+    
+    </body>
 </html>
