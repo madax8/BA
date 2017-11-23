@@ -8,14 +8,15 @@
    </head>
    <body>
    <div class="col-md-12">
-      <h3>
+      <h2>
          <a href = "{{ url_for('show_address') }}">Adressübersicht</a>
-      </h3>
-      <hr/>
+      </h2>
       {%- for message in get_flashed_messages() %}
          {{ message }}
       {%- endfor %}
-       <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen</a>)</h3>
+       <h3> Addressen (<a href = "{{ url_for('new_address') }}">hinzufügen</a>)
+       <a id="zurück" href="/">zurück zur Übersicht</a></h3>
+       <hr>
    </div>
 
       <table class="table table-striped">

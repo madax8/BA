@@ -1,12 +1,17 @@
 
 h1{
-    color: white;
+    color: #257ECA;
 }
 
-.col-md-12 {
-    background: black;
-}
+/*.col-md-12 {*/
+    /*background: #3333;*/
+/*}*/
 
 h3{
-    color: white;
+    color: Black;
 }
+
+#zurück {
+    float: right;
+}
+
