@@ -33,7 +33,6 @@ app.config['SECRET_KEY'] = "random string"
 db = SQLAlchemy(app)
 
 
-
 # if __name__ = '__main__':
 #     app.run()
 app.config['DEBUG'] = True
@@ -151,7 +150,8 @@ def show_address():
 @app.route('/new', methods=['GET', 'POST'])
 def new():
     if request.method == 'POST':
-        if not request.form['modelname'] or not request.form['wert'] or not request.form['status']:
+        if not request.form['modelname'] or not request.form['wert'] \
+                                         or not request.form['status']:
             flash('Please enter all the fields', 'error')
         else:
             modem = modems(request.form['modelname'], request.form['mac'], request.form['wert'],
@@ -169,12 +169,15 @@ def new():
 @app.route('/new_address', methods=['GET', 'POST'])
 def new_address():
     if request.method == 'POST':
-        if not request.form['name'] or not request.form['street'] or not request.form['number'] \
-                or not request.form['plz'] or not request.form['city'] or not request.form['mac']:
+        if not request.form['name'] or not request.form['street'] \
+                or not request.form['number'] \
+                or not request.form['plz'] or not request.form['city'] \
+                or not request.form['mac']:
             flash('Please enter all the fields', 'error')
         else:
             addr = address(request.form['name'], request.form['street'],
-                               request.form['number'], request.form['plz'], request.form['city'], request.form['mac'])
+                           request.form['number'], request.form['plz'],
+                           request.form['city'], request.form['mac'])
 
             db.session.add(addr)
             db.session.commit()
@@ -305,6 +308,17 @@ def create_geojson(name):
     #     f.write(convert_json(arr))
     #     # json.dump(convert_json(location.raw), f)
     # return app.send_static_file(name + '.geojson')
+
+
+# also die neue Idee waere das hier mit den Daten zu fuellen und dann in das Json werfen
+class geoObject:
+
+    def __init__(self, mac, coords, addr, status, wert):
+        self.mac = mac
+        self.coords = coords
+        self.address = addr
+        self.status = status
+        self.wert = wert
 
 
 # converts an array of nominatim raw data in a valid Geojson
