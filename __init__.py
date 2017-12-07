@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request, flash, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from flask import json
 # from flask import request
 import requests
@@ -210,97 +211,101 @@ def show_leaflet():
 # later this strings have to be replaced with a parameter array
 @app.route('/create/<name>')
 def create_geojson(name):
-    arr = []
-    # spaeter in schleife verpacken ... Daten sollten dann von Datenbank kommen
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 17")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 13")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 42")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 26")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 25")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 16")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 27")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Bayerstraße 2")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 30")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 29")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 36")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 19")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 10")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 12")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 19")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 1")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 5")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 10")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 7")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")))
-    arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 52")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 37")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 48")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Johannesweg 3")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Bach 2")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Dorfstraße 5")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Wasen 9")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Panger Straße 30")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Bergblick 9")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Mitteralmweg 33")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Mitteralmweg 19")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Rehleitenweg 3")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Hocheckstraße 8")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Königstraße 24")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Königstraße 11")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 3")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 16")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 32")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 6")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 12a")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 40")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 49")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 2")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 7")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 13")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Sepp-Heindl-Straße 7")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Dr.-Steinbeißer-Straße 2")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Finkenweg 1")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Finkenweg 11")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 6")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 14")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 32")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Erlenweg 13a")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ahornweg 5")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ulmenweg 7")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Birkenweg 10")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Buchenweg 12")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Hainholzstraße 16")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Tannenweg 7")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Eichenweg 9")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Eichenweg 31")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Mitterweg 15")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Danziger Strasse 6")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Breslauer Strasse 8")))
-    arr.append((lookup_coords("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 42")))
-    arr.append((lookup_coords("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 64")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Herbststrasse 1")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
-    arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Am Innreit 2"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 2"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 3"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 4"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 5"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 6"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 7"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 8"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 9"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 10"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 11"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 12"))
-    arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 13"))
-    print(arr)
+    # arr = []
+    # # spaeter in schleife verpacken ... Daten sollten dann von Datenbank kommen
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 17")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 13")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 42")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 26")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 25")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 16")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 27")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Bayerstraße 2")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 30")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 29")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 36")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 19")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 10")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 12")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 19")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 1")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 5")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Sedanstraße 10")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 7")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Am Nörreut 20")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 4")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Hofmannstraße 7")))
+    # arr.append((lookup_coords("Germany Bavaria Rosenheim 83022 Innstraße 52")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 37")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Innstraße 48")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Bayerstraße 6")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Hofmannstraße 12a")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Johannesweg 3")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Bach 2")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Dorfstraße 5")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Wasen 9")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Panger Straße 30")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Bergblick 9")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Mitteralmweg 33")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Mitteralmweg 19")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Rehleitenweg 3")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Hocheckstraße 8")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Königstraße 24")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Königstraße 11")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 3")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 16")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Am Rackermoos 32")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 6")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 12a")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 40")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 49")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Alte Landstraße 2")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 7")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Schwaiger Weg 13")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Sepp-Heindl-Straße 7")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Dr.-Steinbeißer-Straße 2")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Finkenweg 1")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83026 Finkenweg 11")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 6")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 14")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Fichtenweg 32")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Erlenweg 13a")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ahornweg 5")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ulmenweg 7")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Birkenweg 10")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Buchenweg 12")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Hainholzstraße 16")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Tannenweg 7")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Eichenweg 9")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Eichenweg 31")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Mitterweg 15")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Danziger Strasse 6")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83024 Breslauer Strasse 8")))
+    # arr.append((lookup_coords("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 42")))
+    # arr.append((lookup_coords("Deutschland Bayern Stephanskirchen 83071 Salzburger Strasse 64")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Herbststrasse 1")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
+    # arr.append((lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 18")))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Am Innreit 2"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 2"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 3"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 4"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 5"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 6"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 7"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 8"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 9"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 10"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 11"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 12"))
+    # arr.append(lookup_coords("Deutschland Bayern Rosenheim 83022 Ellmaierstrasse 13"))
+    # print(arr)
+    j = (db.session.query(modems, address)).filter(modems.mac == address.mac)
+    print(j)
+
+    save_json(name, convert_json(j))
     return "Erfolgreich!"
     # save_json(name, convert_json(arr))
     #
@@ -310,38 +315,45 @@ def create_geojson(name):
     # return app.send_static_file(name + '.geojson')
 
 
-# also die neue Idee waere das hier mit den Daten zu fuellen und dann in das Json werfen
-class geoObject:
-
-    def __init__(self, mac, coords, addr, status, wert):
-        self.mac = mac
-        self.coords = coords
-        self.address = addr
-        self.status = status
-        self.wert = wert
-
-
 # converts an array of nominatim raw data in a valid Geojson
 # muss nochmal mit den richtigen Daten gemacht werden
 def convert_json(ar):
-    j = {"type": "FeatureCollection",
-         "features": [
-            {"type": "Feature",
-             "geometry": {"type": "Point",
-                          "coordinates": [float(feat['lon']),
-                                          float(feat['lat'])]},
-             "properties": {"data": {"status": "ok"},
-                            "osm": {key: value
-                                    for key, value in feat.items()
-                                    if key not in ('lat', 'lon', 'boundingbox')}
-                            }
-             }for feat in ar
-         ]
+    table_as_dict = []
+
+    for row in ar:
+        row_number = str(row.address.number)
+        row_address = "Deutschland Bayern " + row.address.city + " " \
+                      + str(row.address.plz) + " " + row.address.street + " " + row_number
+        row_coords = lookup_coords(row_address)
+        row_as_dict = {
+            'type': "Feature",
+            'properties': {
+                'modelname': row.modems.modelname,
+                'mac': row.modems.mac,
+                'status': row.modems.status,
+                'wert': row.modems.wert,
+                'name': row.address.name,
+                'street': row.address.street,
+                'number': row.address.number,
+                'plz': row.address.plz,
+                'city': row.address.city
+            },
+            'geometry':{
+                'type': 'Point',
+                # frontend expect this to be swapped...
+                'coordinates': [row_coords[1], row_coords[0]]
+            }
+
+        }
+        table_as_dict.append(row_as_dict)
+    geojson = {
+        "type": "FeatureCollection",
+        "features": table_as_dict
     }
 
-    j = json.dumps(j, indent=4)
-
-    return j
+    print(geojson)
+    geojson = json.dumps(geojson, indent=4)
+    return geojson
 
 
 # code thanks to time.sleep() very slow, but it has to be because of nominatims usage policy
@@ -374,7 +386,7 @@ def geojson_detail(name):
 def lookup_coords(addr):
     m = mapAddress.query.filter_by(address=addr).first()
     if m:
-        return (m.lat, m.lon)
+        return [m.lat, m.lon]
     else:
         n = do_geocode(addr).raw
         for key, value in n.items():
@@ -384,7 +396,7 @@ def lookup_coords(addr):
                 lon = value
 
         new_coords(addr, lat, lon)
-        return (lat, lon)
+        return [lat, lon]
 
 
 # abspeichern neuer Geokodierungsdaten
