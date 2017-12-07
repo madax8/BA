@@ -152,19 +152,9 @@ var markers = L.markerClusterGroup({
 
 // Erstelle Marker und Popups aus der Geojsonsource und fügt sie der Karte hinzu
 $(document).ajaxStop(function (){
-    i = 0;
     var geoJsonLayer = L.geoJson(mod, {
         pointToLayer: function (feature, latlng) {
             //Frontend Datenmanipulation für Demonstrationszwecke
-            i++;
-            // if( i % 2 === 0)
-            //     feature.properties.data.status = 'ok';
-            // else if ( i % 5 === 0)
-            //     feature.properties.data.status = 'warning';
-            // else if ( i % 7 === 0)
-            //     feature.properties.data.status = 'error';
-            // else if (i % 13 === 0)
-            //     feature.properties.data.status = 'offline';
             //Status bestimmt die Iconfarbe
             if(feature.properties.status === 'offline'){
                 return L.marker(latlng, {icon: greyIcon}).on('click', onMarkerClick);
