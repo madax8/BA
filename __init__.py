@@ -321,9 +321,9 @@ def convert_json(ar):
     table_as_dict = []
 
     for row in ar:
-        row_number = str(row.address.number)
         row_address = "Deutschland Bayern " + row.address.city + " " \
-                      + str(row.address.plz) + " " + row.address.street + " " + row_number
+                      + str(row.address.plz) + " " + row.address.street \
+                      + " " + str(row.address.number)
         row_coords = lookup_coords(row_address)
         row_as_dict = {
             'type': "Feature",
@@ -338,7 +338,7 @@ def convert_json(ar):
                 'plz': row.address.plz,
                 'city': row.address.city
             },
-            'geometry':{
+            'geometry': {
                 'type': 'Point',
                 # frontend expect this to be swapped...
                 'coordinates': [row_coords[1], row_coords[0]]
