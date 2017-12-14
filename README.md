@@ -111,7 +111,73 @@ Hier finden sich als erste diverse Routingfunktionen.
     def show_map_dynamic(name):
         return render_template('leaflet.html', jsonName=name)
 ```
-Desweiteren wird hier das Geocoding mithilfe einer Nominatim API durchgeführt.
+Mit der create function lassen sich Geojsons erstellen, welchen dann im Client innerhalb der Karte dargestellt werden. 
+```python
+@app.route('/create/<name>')
+def create_geojson(name):
+    j = (db.session.query(modems, address)).filter(modems.mac == address.mac)
+    print(j)
+
+    save_json(name, convert_json(j))
+    return "Erfolgreich!"
+```
+Die in aufgerufene Funktion convert_json(), dient dazu das Ergebniss des obigen Datenbankjoins in ein Jsonformat zu bringen.
+```python
+def convert_json(ar):
+    table_as_dict = []
+    for row in ar:
+        row_address = "Deutschland Bayern " + row.address.city + " " \
+                      + str(row.address.plz) + " " + row.address.street \
+                      + " " + str(row.address.number)
+        row_coords = lookup_coords(row_address)
+        row_as_dict = {
+            'type': "Feature",
+            'properties': {
+                'modelname': row.modems.modelname,
+                'mac': row.modems.mac,
+                'status': row.modems.status,
+                'wert': row.modems.wert,
+                'name': row.address.name,
+                'street': row.address.street,
+                'number': row.address.number,
+                'plz': row.address.plz,
+                'city': row.address.city
+            },
+            'geometry': {
+                'type': 'Point',
+                # frontend expect this to be swapped...
+                'coordinates': [row_coords[1], row_coords[0]]
+            }
+        }
+        table_as_dict.append(row_as_dict)
+    geojson = {
+        "type": "FeatureCollection",
+        "features": table_as_dict
+    }
+    print(geojson)
+    geojson = json.dumps(geojson, indent=4)
+    return geojson
+```
+Lookup_coords dient dazu die Coordinaten der Adresse zu finden. Hierzu wird zunächst eine Lokale DB durchsucht ob diese Adresse bereits vorhanden ist.
+```python
+@app.route('/lookup/<addr>')
+def lookup_coords(addr):
+    m = mapAddress.query.filter_by(address=addr).first()
+    if m:
+        return [m.lat, m.lon]
+    else:
+        n = do_geocode(addr).raw
+        for key, value in n.items():
+            if key == 'lat':
+                lat = value
+            if key == 'lon':
+                lon = value
+
+        new_coords(addr, lat, lon)
+        return [lat, lon]
+```
+
+Andernfalls wird ein Geokodierungsservice aufgerufen.
 ```python
     def do_geocode(addr):
         try:
@@ -120,25 +186,4 @@ Desweiteren wird hier das Geocoding mithilfe einer Nominatim API durchgeführt.
             time.sleep(1)
             return do_geocode(addr)
 ``` 
-Außerdem ist es mithilfe folgender Funktion möglich ein Array in ein Geojsonobjekt umzuwandeln.
-```python
-    def convert_json(ar):
-        j = {"type": "FeatureCollection",
-             "features": [
-                {"type": "Feature",
-                 "geometry": {"type": "Point",
-                              "coordinates": [float(feat['lon']),
-                                              float(feat['lat'])]},
-                 "properties": {"data": {"status": "ok"},
-                                "osm": {key: value
-                                        for key, value in feat.items()
-                                        if key not in ('lat', 'lon', 'boundingbox')}
-                                }
-                 }for feat in ar
-             ]
-        }
 
-        j = json.dumps(j, indent=4)
-
-        return j
-```
