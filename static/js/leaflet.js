@@ -30,6 +30,8 @@ if (!('remove' in Element.prototype)) {
 
 var map = L.map('map');
 map.on('load', function(){
+    // creating and filling the List can only be done
+    // if you have all the Modemdata loaded
     $(document).ajaxStop(function(){
         buildLocationList(mod);
     });

@@ -14,7 +14,7 @@ import time
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
-# geolocator needs a high timeout, because Nominatim is slow as fuck
+# geolocator needs a high timeout, because Nominatim is slow
 # timeout-time can be reduced by using a Try statement
 # higher timeout could reduce the amount of exception a lead to a better performance
 geolocator = Nominatim(timeout=5)
@@ -39,7 +39,7 @@ db = SQLAlchemy(app)
 app.config['DEBUG'] = True
 
 
-#Adresse
+# Adresse
 class address(db.Model):
     __tablename__ = "address"
 
@@ -202,6 +202,7 @@ def show_geojson():
     return render_template('geojson.html', geoj=geoj.query.all())
 
 
+# render leaflet-view without any geojsson-data
 @app.route('/leaflet')
 def show_leaflet():
     return render_template('leaflet.html')
