@@ -246,8 +246,6 @@ function createPopup(feature){
     var popup = L.popup({className: cName});
     popup.setContent(
         '<h3>' + feature.properties.name + '</h3>'
-        // + '<h4>Lon: ' + feature.geometry.coordinates[0] + '</h4>'
-        // + '<h4>Lat: ' + feature.geometry.coordinates[1] + '</h4>'
         + '<h4>Mac: ' + feature.properties.mac + '</h4>'
         + '<h4>Typ: ' + feature.properties.modelname + '</h4>'
         + '<h4>Wert: ' + feature.properties.wert + '</h4>'
