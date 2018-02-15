@@ -14,9 +14,10 @@ import time
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
 
-# geolocator needs a high timeout, because Nominatim is slow
-# timeout-time can be reduced by using a Try statement
-# higher timeout could reduce the amount of exception a lead to a better performance
+
+# hoeherer timeout kann zu einer Performanceerhoehung fuehren
+# da dadurch weniger exceptions zustande kommen
+# bei eigener Nominatim implementierung sollte er moeglichst niedrig sein
 geolocator = Nominatim(timeout=5)
 
 app = Flask(__name__, static_url_path='/static')
@@ -119,12 +120,6 @@ def index():
     return render_template('index.html', geoj=geoj.query.all())
 
 
-# beispiel fuer attributuebergabe
-@app.route('/user/<username>')
-def show_user_profile(username):
-    return 'Hello User %s!' % username
-
-
 @app.route('/map/<name>')
 def show_map_dynamic(name):
     return render_template('leaflet.html', jsonName=name)
@@ -188,7 +183,6 @@ def new_address():
     return render_template('new_address.html')
 
 
-# save a json into the database
 def save_json(name, geojson):
     save = geoj(name, geojson)
     db.session.add(save)
@@ -196,25 +190,22 @@ def save_json(name, geojson):
     # flash('Json was successfully saved')
 
 
-# render the geojson-view
 @app.route('/geojson')
 def show_geojson():
     return render_template('geojson.html', geoj=geoj.query.all())
 
 
-# render leaflet-view without any geojsson-data
+# render leaflet-view ohne Daten
 @app.route('/leaflet')
 def show_leaflet():
     return render_template('leaflet.html')
 
 
-# overwrites a geojson with new data
-# later this strings have to be replaced with a parameter array
+# joint die beiden DBs ueber die macadresse
+# und speichert das ergebniss als geojson
 @app.route('/create/<name>')
 def create_geojson(name):
     j = (db.session.query(modems, address)).filter(modems.mac == address.mac)
-    print(j)
-
     save_json(name, convert_json(j))
     return "Erfolgreich!"
     # save_json(name, convert_json(arr))
@@ -225,8 +216,8 @@ def create_geojson(name):
     # return app.send_static_file(name + '.geojson')
 
 
-# converts an array of nominatim raw data in a valid Geojson
-# muss nochmal mit den richtigen Daten gemacht werden
+# Konvertiert Daten in ein valides Geojsonformat
+# verwendet fake Daten aus der eigenen DB
 def convert_json(ar):
     table_as_dict = []
     for row in ar:
@@ -258,14 +249,14 @@ def convert_json(ar):
         "type": "FeatureCollection",
         "features": table_as_dict
     }
+    # Print vor Livebebrieb löschen
     print(geojson)
     geojson = json.dumps(geojson, indent=4)
     return geojson
 
 
-# code thanks to time.sleep() very slow, but it has to be because of nominatims usage policy
-# catches the timeoutexception and trys again
-# maybe not so much of a problem if a own server is used for nominatim
+# 1 Sekunde ist vorgabe seitens Nominatim
+# kann mit eigenem Server reduziert, evtl. sogar ganz weggelassen werden
 def do_geocode(addr):
     try:
         return geolocator.geocode(addr)
