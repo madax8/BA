@@ -3,7 +3,7 @@
 Dies ist eine auf Leaflet basierende Kartenanwendung zur Darstellung von Modemdaten innerhalb einer Karte.
 Die Einzelheiten sind in der Bachelorarbeit genauer beschrieben.
 
-![Komplettansicht über die Modems](https://github.com/madax8/BA/blob/master/static/Komplettansicht_12.12.2017.PNG)
+![Komplettansicht über die Modems](https://github.com/madax8/BA/blob/master/static/images/Komplettansicht_15.02.2018.PNG)
 
 
 # Startanleitung:
