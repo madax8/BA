@@ -4,7 +4,6 @@ from flask import request, flash, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from flask import json
-# from flask import request
 import requests
 import json
 import os
@@ -114,7 +113,7 @@ class mapAddress(db.Model):
 db.create_all()
 
 
-# home site
+# Startseite
 @app.route('/')
 def index():
     return render_template('index.html', geoj=geoj.query.all())
@@ -202,7 +201,7 @@ def show_leaflet():
 
 
 # joint die beiden DBs ueber die macadresse
-# und speichert das ergebniss als geojson
+# und speichert das Ergebniss als geojson
 @app.route('/create/<name>')
 def create_geojson(name):
     j = (db.session.query(modems, address)).filter(modems.mac == address.mac)
@@ -240,7 +239,7 @@ def convert_json(ar):
             },
             'geometry': {
                 'type': 'Point',
-                # frontend expect this to be swapped...
+                # frontend api erwartet die Koordinaten getauscht
                 'coordinates': [row_coords[1], row_coords[0]]
             }
         }
@@ -249,14 +248,14 @@ def convert_json(ar):
         "type": "FeatureCollection",
         "features": table_as_dict
     }
-    # Print vor Livebebrieb löschen
+    # Print vor Livebebrieb loeschen
     print(geojson)
     geojson = json.dumps(geojson, indent=4)
     return geojson
 
 
-# 1 Sekunde ist vorgabe seitens Nominatim
-# kann mit eigenem Server reduziert, evtl. sogar ganz weggelassen werden
+# die sleepzeit ist eine Nominatim Vorgabe
+# kann mit eigenem Server reduziert oder sogar ganz weggelassen werden
 def do_geocode(addr):
     try:
         return geolocator.geocode(addr)

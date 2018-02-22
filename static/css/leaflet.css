@@ -222,26 +222,25 @@ a:hover {
 .marker-cluster div {
     background: #257ECA;
     font-size: 16px;
-    border: solid 1px #309fff;
+    /*border könnte mit einer anderen Farbe belegt werden um
+    einen zusätzlichen Indikator zu haben.*/
+    border: solid 1px #257ECA;
 }
 
 .green .marker-cluster{
     background: #26AD23;
-    border: solid 1px #39ff35;
+    border: solid 1px #26AD23;
 }
 
 .red .marker-cluster{
     background: #CA2639;
-    border: solid 1px #ff3048;
+    border: solid 1px #CA2639;
 }
 .grey .marker-cluster{
     background: #737373;
-    border: solid 1px #b7b7b7;
+    border: solid 1px #737373;
 }
-/*.red .marker-cluster div {*/
-    /*background: #c64554;*/
-/*}*/
 .yellow .marker-cluster{
     background: #CAC424;
-    border: solid 1px #fff732;
+    border: solid 1px #CAC424;
 }

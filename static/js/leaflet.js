@@ -30,8 +30,6 @@ if (!('remove' in Element.prototype)) {
 
 var map = L.map('map');
 map.on('load', function(){
-    // creating and filling the List can only be done
-    // if you have all the Modemdata loaded
     $(document).ajaxStop(function(){
         buildLocationList(mod);
     });
@@ -46,7 +44,8 @@ function onMarkerClick(e){
     if (activeItem[0]) {
         activeItem[0].classList.remove('active');
     }
-    // Find the index of the mod.features that corresponds to the clickedPoint that fired the event listener
+    // Find the index of the mod.features that corresponds to
+    // the clickedPoint that fired the event listener
     var selectedFeature = clickedPoint.feature.properties.name;
     for (var i = 0; i < mod.features.length; i++) {
         if (mod.features[i].properties.name === selectedFeature) {
@@ -108,7 +107,7 @@ var yellowIcon = new L.Icon({
 var markers = L.markerClusterGroup({
     maxClusterRadius: 40,
     spiderfyOnMaxZoom: true,
-    // erstellt das clusterhtml abhängig von den darunterliegenden Markern
+    // erstellt das clusterhtml abhaengig von den darunterliegenden Markern
     iconCreateFunction: function (cluster) {
         var childs = cluster.getAllChildMarkers();
         var foundred = 0, foundgrey = 0, foundyellow = 0;
@@ -119,7 +118,7 @@ var markers = L.markerClusterGroup({
                 foundred += 1;
             if(childs[i].feature.properties.status === 'warning')
                 foundyellow += 1;
-        }
+        }// hier muss entschieden werden, welche typen priorisiert werden.
         if((foundgrey >= 1 && childs.length < 30 && foundred < 1)
                 || (foundgrey >= 3 && foundred < 2))
             return L.divIcon({
@@ -152,11 +151,11 @@ var markers = L.markerClusterGroup({
     }
 });
 
-// Erstelle Marker und Popups aus der Geojsonsource und fügt sie der Karte hinzu
+
+// Erstelle Marker und Popups aus der Geojsonsource und fuegt sie der Karte hinzu
 $(document).ajaxStop(function (){
     var geoJsonLayer = L.geoJson(mod, {
         pointToLayer: function (feature, latlng) {
-            //Frontend Datenmanipulation für Demonstrationszwecke
             //Status bestimmt die Iconfarbe
             if(feature.properties.status === 'offline'){
                 return L.marker(latlng, {icon: greyIcon}).on('click', onMarkerClick);
@@ -185,25 +184,25 @@ function buildLocationList(data) {
     // Iteriert durch die Modemliste
     for (i = 0; i < data.features.length; i++) {
         var currentFeature = data.features[i];
-        // für einen kürzeren Namen
+        // vereinfachung
         var prop = currentFeature.properties;
-        // Wähle den Container in HTML aus und hänge ein div von der Klasse 'item' an
+        // Waehle den Container in HTML aus und haenge ein div von der Klasse 'item' an
         var listings = document.getElementById('listings');
         var listing = listings.appendChild(document.createElement('div'));
         listing.className = 'item';
         listing.id = 'listing-' + i;
 
         // erstelle einen Link von der Klasse 'title' für jedes Modem
-        // und befülle in mit dem Bezeichner
+        // und befuelle in mit dem Bezeichner
         var link = listing.appendChild(document.createElement('a'));
         link.href = '#';
         link.className = 'title';
         link.dataPosition = i;
         link.innerHTML = prop.name;
 
-        // Click Event des Links
+        // link funktionalitaet
         link.addEventListener('click', function(e) {
-            // Aktualisiere das currentFeature auf das Modem,das mit dem Link zusammenhängt
+            // Aktualisiere das currentFeature
             var clickedListing = data.features[this.dataPosition];
             // 1. Zentriere die Karte auf das entsprechende Modem
             map.setView(new L.LatLng(clickedListing.geometry.coordinates[1],
@@ -214,7 +213,6 @@ function buildLocationList(data) {
                              clickedListing.geometry.coordinates[0]]);
             popup.openOn(map);
             // 3. Hebe das Listenelement in der Sidebar hervor
-            // (entfernt bestehende Hervorhebungen)
             var activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {
                 activeItem[0].classList.remove('active');
@@ -253,6 +251,4 @@ function createPopup(feature){
     );
     return popup;
 }
-
-
 
