@@ -222,8 +222,8 @@ a:hover {
 .marker-cluster div {
     background: #257ECA;
     font-size: 16px;
-    /*border könnte mit einer anderen Farbe belegt werden um
-    einen zusätzlichen Indikator zu haben.*/
+    /*border koennte mit einer anderen Farbe belegt werden um
+    einen zusätzlichen Farbindikator zu haben.*/
     border: solid 1px #257ECA;
 }
 

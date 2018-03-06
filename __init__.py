@@ -30,14 +30,9 @@ POSTGRES = {
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:a1b2c3@localhost/modemdb"
 app.config['SECRET_KEY'] = "random string"
-
-db = SQLAlchemy(app)
-
-
-# if __name__ = '__main__':
-#     app.run()
 app.config['DEBUG'] = True
 
+db = SQLAlchemy(app)
 
 # Adresse
 class address(db.Model):
@@ -186,7 +181,6 @@ def save_json(name, geojson):
     save = geoj(name, geojson)
     db.session.add(save)
     db.session.commit()
-    # flash('Json was successfully saved')
 
 
 @app.route('/geojson')

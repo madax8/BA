@@ -5,10 +5,6 @@ jN = jN.substring(4);
 staticUrl = '/return_geojson' + jN;
 $.getJSON(staticUrl, function(data){
     mod = data;
-    $.ajax({
-        // wird leider vom Browser umgangen und daher mit ajaxStop gelöst
-        // async: false
-    })
 });
     // // regelmäßige aktualisierung der Daten
     // window.setInterval(function() {
@@ -44,19 +40,18 @@ function onMarkerClick(e){
     if (activeItem[0]) {
         activeItem[0].classList.remove('active');
     }
-    // Find the index of the mod.features that corresponds to
-    // the clickedPoint that fired the event listener
+    // auswaehlen des Indexs
     var selectedFeature = clickedPoint.feature.properties.name;
     for (var i = 0; i < mod.features.length; i++) {
         if (mod.features[i].properties.name === selectedFeature) {
             selectedFeatureIndex = i;
         }
     }
-    // Select the correct list item using the found index and add the active class
+    // auswaehlen und aktivsetzen des Listenelements
     var listing = document.getElementById('listing-' + selectedFeatureIndex);
     listing.classList.add('active');
 
-    // Scroll to the Position on the List
+    // die Liste so scrollen, das das active Element zu sehen ist
     var topPos = listing.offsetTop - 230;
     document.getElementById('listings').scrollTop = topPos;
 }
