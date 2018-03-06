@@ -31,7 +31,7 @@ POSTGRES = {
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:a1b2c3@localhost/modemdb"
 app.config['SECRET_KEY'] = "random string"
 app.config['DEBUG'] = True
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Adresse
