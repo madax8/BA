@@ -11,11 +11,10 @@ $.getJSON(staticUrl, function(data){
     //     $.getJSON(staticUrl, function(data){
     //         mod = data;
     //     })
-    //     map.getSource(mod);
+    //     map.addSource(mod);
     // }, 10000);
 
-
-// This will let you use the .remove() function later on
+// das laesst einem spaeter die .remove() Funktion nutzen
 if (!('remove' in Element.prototype)) {
     Element.prototype.remove = function() {
         if (this.parentNode) {
@@ -23,46 +22,6 @@ if (!('remove' in Element.prototype)) {
         }
     };
 }
-
-var map = L.map('map');
-map.on('load', function(){
-    $(document).ajaxStop(function(){
-        buildLocationList(mod);
-    });
-});
-map.setView([47.854954, 12.131016], 13);
-
-
-// zusätzlicher Eventhandler für den Klick auf einen Marker
-function onMarkerClick(e){
-    var clickedPoint = e.target;
-    var activeItem = document.getElementsByClassName('active');
-    if (activeItem[0]) {
-        activeItem[0].classList.remove('active');
-    }
-    // auswaehlen des Indexs
-    var selectedFeature = clickedPoint.feature.properties.name;
-    for (var i = 0; i < mod.features.length; i++) {
-        if (mod.features[i].properties.name === selectedFeature) {
-            selectedFeatureIndex = i;
-        }
-    }
-    // auswaehlen und aktivsetzen des Listenelements
-    var listing = document.getElementById('listing-' + selectedFeatureIndex);
-    listing.classList.add('active');
-
-    // die Liste so scrollen, das das active Element zu sehen ist
-    var topPos = listing.offsetTop - 230;
-    document.getElementById('listings').scrollTop = topPos;
-}
-
-// hier wird der Basislayer(Basiskartendaten) der Karte hinzugefügt
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OSM</a>, <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMnB5eXpvMTAwNDMzM2xrdDF0eW02bTkifQ.VxANLxzX8ALvUIDG7y6FLQ'
-}).addTo(map);
 
 // definiert verschiedenfarbige Icons die später als Marker verwendet werden
 var greenIcon = new L.Icon({
@@ -113,7 +72,8 @@ var markers = L.markerClusterGroup({
                 foundred += 1;
             if(childs[i].feature.properties.status === 'warning')
                 foundyellow += 1;
-        }// hier muss entschieden werden, welche typen priorisiert werden.
+        }// hier muss entschieden werden, welcher status priorisiert wird
+        // bzw ab welcher Menge man eine andere Farbe priorisiert
         if((foundgrey >= 1 && childs.length < 30 && foundred < 1)
                 || (foundgrey >= 3 && foundred < 2))
             return L.divIcon({
@@ -146,6 +106,22 @@ var markers = L.markerClusterGroup({
     }
 });
 
+var map = L.map('map');
+map.on('load', function(){
+    $(document).ajaxStop(function(){
+        buildLocationList(mod);
+    });
+});
+map.setView([47.854954, 12.131016], 13);
+
+// hier wird der Basislayer(Basiskartendaten) der Karte hinzugefügt
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OSM</a>, <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoibWFyZGF4IiwiYSI6ImNqMnB5eXpvMTAwNDMzM2xrdDF0eW02bTkifQ.VxANLxzX8ALvUIDG7y6FLQ'
+}).addTo(map);
+
 
 // Erstelle Marker und Popups aus der Geojsonsource und fuegt sie der Karte hinzu
 $(document).ajaxStop(function (){
@@ -172,7 +148,6 @@ $(document).ajaxStop(function (){
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
 });
-
 
 // erstellen der Modemliste
 function buildLocationList(data) {
@@ -247,3 +222,25 @@ function createPopup(feature){
     return popup;
 }
 
+// zusätzlicher Eventhandler für den Klick auf einen Marker
+function onMarkerClick(e){
+    var clickedPoint = e.target;
+    var activeItem = document.getElementsByClassName('active');
+    if (activeItem[0]) {
+        activeItem[0].classList.remove('active');
+    }
+    // auswaehlen des Indexs
+    var selectedFeature = clickedPoint.feature.properties.name;
+    for (var i = 0; i < mod.features.length; i++) {
+        if (mod.features[i].properties.name === selectedFeature) {
+            selectedFeatureIndex = i;
+        }
+    }
+    // auswaehlen und aktivsetzen des Listenelements
+    var listing = document.getElementById('listing-' + selectedFeatureIndex);
+    listing.classList.add('active');
+
+    // zum aktiven Element scrollen
+    var topPos = listing.offsetTop - 230;
+    document.getElementById('listings').scrollTop = topPos;
+}
